@@ -8,7 +8,7 @@ import {isNullOrUndefined} from "util";
 
 @Injectable()
 export class AuthenticationService {
-  private static readonly apiUrl = 'http://10.64.0.41:8080';
+  private static readonly apiUrl = 'http://10.64.0.41:8080/ctlktime';
   private static readonly tokenUrl = AuthenticationService.apiUrl + '/login/token';
   private static readonly userPath = AuthenticationService.apiUrl + '/test';
   private static readonly clientId ='clktime-app';
