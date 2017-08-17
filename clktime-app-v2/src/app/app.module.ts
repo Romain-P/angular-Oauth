@@ -4,6 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ActivitiesComponent } from './pages/activities/activities.component';
+import { ActivitiesService } from './services/activities/activities.service';
+
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -19,7 +23,6 @@ import {AuthenticationService} from "./services/authentication/authentication.se
 import {AuthenticationGuard, LoggedGuard} from "./services/authentication/gard.service";
 import {HttpService} from "./services/http/http.service";
 
-
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
@@ -27,7 +30,8 @@ const APP_PROVIDERS = [
   AuthenticationService,
   AuthenticationGuard,
   LoggedGuard,
-  HttpService
+  HttpService,
+  ActivitiesService,
 ];
 
 export type StoreType = {
@@ -42,7 +46,8 @@ export type StoreType = {
 @NgModule({
   bootstrap: [App],
   declarations: [
-    App
+    App,
+    ActivitiesComponent,
   ],
   imports: [ // import Angular's modules
     BrowserModule,
@@ -50,6 +55,7 @@ export type StoreType = {
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    Ng2SmartTableModule,
     NgaModule.forRoot(),
     NgbModule.forRoot(),
     PagesModule,
