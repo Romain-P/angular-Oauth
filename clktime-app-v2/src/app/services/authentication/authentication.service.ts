@@ -10,7 +10,7 @@ import {isNullOrUndefined} from "util";
 export class AuthenticationService {
   private static readonly apiUrl = 'http://10.64.0.41:8080/gta';
   private static readonly tokenUrl = AuthenticationService.apiUrl + '/login/token';
-  private static readonly userPath = AuthenticationService.apiUrl + '/test';
+  private static readonly userPath = AuthenticationService.apiUrl + '/hello';
   private static readonly clientId ='clktime-app';
   private static readonly clientSecret ='ortec-secret';
 
@@ -33,7 +33,7 @@ export class AuthenticationService {
         localStorage.setItem('expiration_date', ((Date.now() / 1000) + json.expires_in));
       })
       .mergeMap(json => this.http.get(AuthenticationService.userPath, {headers: this.getRequestHeader()}))
-      .do(request => localStorage.setItem('user', request.json()));
+      .do(request => localStorage.setItem('userId', request.json().id));
   }
 
   public validToken(): boolean {
@@ -49,6 +49,6 @@ export class AuthenticationService {
   public logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration_date');
-    localStorage.removeItem('user');
+    localStorage.removeItem('userId');
   }
 }
