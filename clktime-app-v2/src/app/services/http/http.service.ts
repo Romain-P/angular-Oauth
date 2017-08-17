@@ -9,10 +9,16 @@ export class HttpService {
   constructor(private http: Http, private auth: AuthenticationService) {}
 
   public get(url: string): Observable<any> {
-    return this.http.get(url, {headers: this.auth.getRequestHeader()});
+    return this.http.get(url, { headers: this.auth.getRequestHeader() });
   }
 
   public post(url: string, data: any): Observable<any> {
-    return this.http.post(url, data, {headers: this.auth.getRequestHeader()});
+    return this.http.post(url, data, { headers: this.auth.getRequestHeader() });
   }
+  public put(url: string, data: any): Observable<any> {
+    return this.http.put(url, data, { headers: this.auth.getRequestHeader() });
+  }
+  public delete(url: string): Observable<any> {
+  return this.http.delete(url, { headers: this.auth.getRequestHeader() });
+}
 }

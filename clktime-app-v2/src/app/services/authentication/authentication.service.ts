@@ -43,7 +43,8 @@ export class AuthenticationService {
   }
 
   public getRequestHeader(): Headers {
-    return new Headers({"Authorization": "Bearer " + localStorage.getItem('token')})
+    return new Headers({"Authorization": "Bearer " + localStorage.getItem('token'),
+                        'content-type': 'application/json', 'Accept-Language': 'application/json'})
   }
 
   public logout() {
