@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 import {GlobalState} from '../../../global.state';
 
 @Component({
-  selector: 'ba-page-top',
+  selector: 'ba-page-top-old',
   templateUrl: './baPageTop.html',
   styleUrls: ['./baPageTop.scss']
 })

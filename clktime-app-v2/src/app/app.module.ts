@@ -31,7 +31,7 @@ const APP_PROVIDERS = [
   AuthenticationGuard,
   LoggedGuard,
   HttpService,
-  ActivitiesService,
+  ActivitiesService
 ];
 
 export type StoreType = {
@@ -47,7 +47,7 @@ export type StoreType = {
   bootstrap: [App],
   declarations: [
     App,
-    ActivitiesComponent,
+    ActivitiesComponent
   ],
   imports: [ // import Angular's modules
     BrowserModule,

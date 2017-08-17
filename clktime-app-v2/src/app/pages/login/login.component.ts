@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ApplicationRef} from '@angular/core';
+import {ChangeDetectorRef, Component, ApplicationRef, Injectable} from '@angular/core';
 import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
 import {AuthenticationService} from "../../services/authentication/authentication.service";
 import { Router } from '@angular/router';
@@ -33,5 +33,9 @@ export class Login {
       () => this.router.navigateByUrl("/pages/dashboard"),
       () => this.authError = "Invalid username or password"
     );
+  }
+
+  public onLogout(): void {
+    this.router.navigateByUrl("/pages/login")
   }
 }
