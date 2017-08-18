@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Http, Headers} from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/catch';
 import "rxjs/add/operator/mergeMap";
 import "rxjs/add/operator/do";
@@ -11,8 +11,8 @@ export class AuthenticationService {
   private static readonly api = 'http://10.64.0.41:8080/gta';
   private static readonly tokenUrl = AuthenticationService.api + '/login/token';
   private static readonly userPath = AuthenticationService.api + '/hello';
-  private static readonly clientId ='clktime-app';
-  private static readonly clientSecret ='ortec-secret';
+  private static readonly clientId = 'clktime-app';
+  private static readonly clientSecret = 'ortec-secret';
 
   private static readonly authHeaders = new Headers({
     "Content-Type": "application/x-www-form-urlencoded",
@@ -20,11 +20,12 @@ export class AuthenticationService {
     "Authorization": "Basic " + btoa(AuthenticationService.clientId + ":" + AuthenticationService.clientSecret)
   });
 
-  constructor(private http: Http) {}
+  constructor(private http: Http) {
+  }
 
   public authenticate(username: string, password: string): Observable<any> {
-    let client = "username=" +username + "&password=" +password + "&grant_type=password&scope=read%20write&" +
-      "client_secret="+AuthenticationService.clientSecret+"&client_id="+AuthenticationService.clientId;
+    let client = "username=" + username + "&password=" + password + "&grant_type=password&scope=read%20write&" +
+      "client_secret=" + AuthenticationService.clientSecret + "&client_id=" + AuthenticationService.clientId;
 
     return this.http.post(AuthenticationService.tokenUrl, client, {headers: AuthenticationService.authHeaders})
       .map(response => response.json())

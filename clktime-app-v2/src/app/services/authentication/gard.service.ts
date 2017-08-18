@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CanActivate, Router} from '@angular/router';
-import { AuthenticationService } from './authentication.service';
+import {AuthenticationService} from './authentication.service';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
 
-  constructor(private authService: AuthenticationService, private router: Router) {}
+  constructor(private authService: AuthenticationService, private router: Router) {
+  }
 
   public canActivate(): boolean {
     if (this.authService.validToken())
@@ -19,7 +20,8 @@ export class AuthenticationGuard implements CanActivate {
 @Injectable()
 export class LoggedGuard implements CanActivate {
 
-  constructor(private authService: AuthenticationService, private router: Router) {}
+  constructor(private authService: AuthenticationService, private router: Router) {
+  }
 
   public canActivate(): boolean {
     if (!this.authService.validToken())
