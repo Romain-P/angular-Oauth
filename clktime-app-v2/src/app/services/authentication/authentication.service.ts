@@ -8,9 +8,9 @@ import {isNullOrUndefined} from "util";
 
 @Injectable()
 export class AuthenticationService {
-  private static readonly apiUrl = 'http://http://10.64.0.41:8080/gta';
-  private static readonly tokenUrl = AuthenticationService.apiUrl + '/login/token';
-  private static readonly userPath = AuthenticationService.apiUrl + '/hello';
+  private static readonly api = 'http://10.64.0.41:8080/gta';
+  private static readonly tokenUrl = AuthenticationService.api + '/login/token';
+  private static readonly userPath = AuthenticationService.api + '/hello';
   private static readonly clientId ='clktime-app';
   private static readonly clientSecret ='ortec-secret';
 
@@ -43,7 +43,6 @@ export class AuthenticationService {
   }
 
   public getRequestHeader(): Headers {
-
     return new Headers({
       "Authorization": "Bearer " + localStorage.getItem('token'),
       "Accept": "application/json",
