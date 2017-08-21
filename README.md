@@ -10,5 +10,5 @@ Works with access token, provided by Oauth2.
 
 ## Installation
 
-`requires: ` **NodeJS** (current 8.X.X at least), **AngularCLI**, **Python + 2.0**
+`requires: ` **NodeJS** (current 8.X.X at least), **AngularCLI**, **Python + 2.0**  
 `npm install`
