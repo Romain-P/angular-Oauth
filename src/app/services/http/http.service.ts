@@ -11,30 +11,18 @@ export class HttpService {
   }
 
   public get(url: string): Observable<any> {
-    return this.http.get(url, {headers: this.auth.getRequestHeader()}).catch(this.invalidToken);
+    return this.http.get(url, {headers: this.auth.getRequestHeader()}).catch(this.auth.invalidToken);
   }
 
   public post(url: string, data: any): Observable<any> {
-    return this.http.post(url, data, {headers: this.auth.getRequestHeader()}).catch(this.invalidToken);
+    return this.http.post(url, data, {headers: this.auth.getRequestHeader()}).catch(this.auth.invalidToken);
   }
 
   public put(url: string, data: any): Observable<any> {
-    return this.http.put(url, data, {headers: this.auth.getRequestHeader()}).catch(this.invalidToken);
+    return this.http.put(url, data, {headers: this.auth.getRequestHeader()}).catch(this.auth.invalidToken);
   }
 
   public delete(url: string): Observable<any> {
-    return this.http.delete(url, {headers: this.auth.getRequestHeader()}).catch(this.invalidToken);
-  }
-
-  private invalidToken(error: any): Observable<any> {
-    if (error.json().error === "invalid_token") {
-
-      localStorage.removeItem('token');
-      localStorage.removeItem('expiration_date');
-      localStorage.removeItem('userId');
-
-      window.location.reload();
-    }
-    return Observable.throw(error);
+    return this.http.delete(url, {headers: this.auth.getRequestHeader()}).catch(this.auth.invalidToken);
   }
 }

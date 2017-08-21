@@ -51,8 +51,19 @@ export class AuthenticationService {
     });
   }
 
+  public invalidToken(error: any): Observable<any> {
+    if (error.json().error === "invalid_token") {
 
-  public logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('expiration_date');
+      localStorage.removeItem('userId');
+
+      window.location.reload();
+    }
+    return Observable.throw(error);
+  }
+
+  public logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration_date');
     localStorage.removeItem('userId');
