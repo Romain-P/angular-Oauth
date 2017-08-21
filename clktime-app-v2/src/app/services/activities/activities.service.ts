@@ -6,10 +6,9 @@ import {HttpService} from '../http/http.service';
 
 @Injectable()
 export class ActivitiesService {
-  private activitiesUrl = `http://10.64.0.41:8080/gta/activity`; // URL to web api
+  private activitiesUrl = `http://localhost:8080/activity`;
 
   constructor(private http: HttpService, private auth: AuthenticationService) {}
-
 
   getActivities(): Promise<Activity[]> {
     return this.http.get(this.activitiesUrl)
@@ -25,7 +24,6 @@ export class ActivitiesService {
       .then(response => {
       }).catch(this.handleError);
   }
-
 
   saveActivity(activity: Activity): Promise<Activity> {
     return this.http.put(this.activitiesUrl, activity)

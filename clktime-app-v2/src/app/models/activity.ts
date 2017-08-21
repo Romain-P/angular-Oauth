@@ -4,7 +4,7 @@ export class Activity {
     code: string;
     parentActivity: any;
 
-    constructor(id?: any) {
+    constructor(id?: number) {
       if (id)
         this.id = id;
     }

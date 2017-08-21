@@ -13,12 +13,14 @@ import {Router} from '@angular/router';
 })
 export class ActivitiesComponent implements OnInit {
   private source: LocalDataSource;
+  private activities: Activity[];
   private listActivities: Object[];
   private settings: Object;
 
   constructor(private service: ActivitiesService) {
     this.source = new LocalDataSource();
     this.listActivities = [];
+    this.activities = [];
   }
 
   public ngOnInit() {
@@ -73,6 +75,7 @@ export class ActivitiesComponent implements OnInit {
   private loadData(): void {
     this.service.getActivities().then((activities) => {
       activities.forEach(activite => {
+        this.activities.push(activite);
         this.listActivities.push({value: activite.id, title: activite.name});
       });
       this.settings = this.loadTableSettings();
@@ -83,7 +86,7 @@ export class ActivitiesComponent implements OnInit {
 
   private castParentActivity(activity: Activity): void {
     if (activity.parentActivity !== '' && typeof activity.parentActivity !== "object") {
-      activity.parentActivity = new Activity((activity.parentActivity));
+      activity.parentActivity = this.activities.find(x => x.id == +activity.parentActivity);
     } else
       activity.parentActivity = null as Activity;
   }
