@@ -52,7 +52,7 @@ export class AuthenticationService {
   }
 
   public invalidToken(error: any): Observable<any> {
-    if (error.json().error === "invalid_token") {
+    if (error && error.json().error === "invalid_token") {
 
       localStorage.removeItem('token');
       localStorage.removeItem('expiration_date');
