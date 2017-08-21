@@ -19,8 +19,6 @@ export class ActivitiesComponent implements OnInit {
 
   constructor(private service: ActivitiesService) {
     this.source = new LocalDataSource();
-    this.listActivities = [];
-    this.activities = [];
   }
 
   public ngOnInit() {
@@ -73,13 +71,17 @@ export class ActivitiesComponent implements OnInit {
   }
 
   private loadData(): void {
+    this.activities = [];
+    this.listActivities = [];
+
     this.service.getActivities().then((activities) => {
-      activities.forEach(activite => {
-        this.activities.push(activite);
-        this.listActivities.push({value: activite.id, title: activite.name});
+      activities.forEach(activity => {
+        this.activities.push(activity);
+        this.listActivities.push({value: activity.id, title: activity.name});
       });
       this.settings = this.loadTableSettings();
 
+      this.source.reset(true);
       this.source.load(activities);
     });
   }

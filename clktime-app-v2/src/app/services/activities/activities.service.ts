@@ -6,7 +6,7 @@ import {HttpService} from '../http/http.service';
 
 @Injectable()
 export class ActivitiesService {
-  private activitiesUrl = `http://10.64.0.41:8080/gta/activity`;
+  private activitiesUrl = `http://localhost:8080/activity`;
 
   constructor(private http: HttpService, private auth: AuthenticationService) {}
 
