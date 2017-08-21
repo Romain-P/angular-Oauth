@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {AuthenticationService} from "../authentication/authentication.service";
 import {Observable} from "rxjs/Observable";
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class HttpService {
@@ -9,18 +11,30 @@ export class HttpService {
   }
 
   public get(url: string): Observable<any> {
-    return this.http.get(url, {headers: this.auth.getRequestHeader()});
+    return this.http.get(url, {headers: this.auth.getRequestHeader()}).catch(this.invalidToken);
   }
 
   public post(url: string, data: any): Observable<any> {
-    return this.http.post(url, data, {headers: this.auth.getRequestHeader()});
+    return this.http.post(url, data, {headers: this.auth.getRequestHeader()}).catch(this.invalidToken);
   }
 
   public put(url: string, data: any): Observable<any> {
-    return this.http.put(url, data, {headers: this.auth.getRequestHeader()});
+    return this.http.put(url, data, {headers: this.auth.getRequestHeader()}).catch(this.invalidToken);
   }
 
   public delete(url: string): Observable<any> {
-    return this.http.delete(url, {headers: this.auth.getRequestHeader()});
+    return this.http.delete(url, {headers: this.auth.getRequestHeader()}).catch(this.invalidToken);
+  }
+
+  private invalidToken(error: any): Observable<any> {
+    if (error.json().error === "invalid_token") {
+
+      localStorage.removeItem('token');
+      localStorage.removeItem('expiration_date');
+      localStorage.removeItem('userId');
+
+      window.location.reload();
+    }
+    return Observable.throw(error);
   }
 }
