@@ -89,20 +89,18 @@ export class ActivitiesComponent implements OnInit {
   private castParentActivity(activity: Activity): void {
     if (activity.parentActivity !== '' && typeof activity.parentActivity !== "object") {
       activity.parentActivity = this.activities.find(x => x.id == +activity.parentActivity);
-    } else
-      activity.parentActivity = null as Activity;
+    } else{
+      activity.parentActivity = null as Activity;}
   }
-
   public onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete this activity?')) {
       let activity = event.data as Activity;
 
       this.service.deleteActivity(+activity.id).then(() => this.loadData());
       event.confirm.resolve();
-    } else
-      event.confirm.reject();
+    } else{
+      event.confirm.reject();}
   }
-
   public onCreateConfirm(event): void {
     let activity = event.newData as Activity;
 
@@ -111,7 +109,6 @@ export class ActivitiesComponent implements OnInit {
 
     this.service.postActivity(activity).then(() => this.loadData());
   }
-
   public onEditConfirm(event): void {
     console.log(event);
     let activity = event.newData as Activity;

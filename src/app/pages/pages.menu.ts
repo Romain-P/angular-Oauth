@@ -26,7 +26,20 @@ export const PAGES_MENU = [
           }
         },
         
-      }
-    ]
-  }
+      },
+      {
+        path: 'activitiesUser',
+        data: {
+          menu: {
+            title: 'general.menu.activitiesUser',
+            icon: 'ion-bag',
+            selected: false,
+            expanded: false,
+            order: 100,
+          },
+        },
+        
+      },
+    ],
+  },
 ];

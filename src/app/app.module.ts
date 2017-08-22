@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ActivitiesUserComponent } from './pages/activitiesUser/activitiesUser';
-import { ActivitiesUserService } from './services/activitiesuser/activitiesuser.service';
+import { ActivitiesUserService } from './services/activitiesUser/activitiesUser.service';
 import { ActivitiesComponent } from './pages/activities/activities.component';
 import { ActivitiesService } from './services/activities/activities.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';

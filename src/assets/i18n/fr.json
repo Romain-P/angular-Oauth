@@ -44,7 +44,8 @@
       "menu_level_1_2": "Menu Level 1.2",
       "menu_level_1_2_1": "Menu Level 1.2.1",
       "external_link": "External Link",
-      "activities" :"Activités"
+      "activities" :"Activités",
+      "activitiesUser" :"Affectation"
     },
     "created_with": "Created with"
   },
