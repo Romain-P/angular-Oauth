@@ -4,9 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ActivitiesUserComponent } from './pages/activitiesUser/activitiesUser';
+import { ActivitiesUserService } from './services/activitiesuser/activitiesuser.service';
 import { ActivitiesComponent } from './pages/activities/activities.component';
 import { ActivitiesService } from './services/activities/activities.service';
-
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 /*
  * Platform and Environment providers/directives/pipes
@@ -19,9 +20,9 @@ import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
-import {AuthenticationService} from "./services/authentication/authentication.service";
-import {AuthenticationGuard, LoggedGuard} from "./services/authentication/gard.service";
-import {HttpService} from "./services/http/http.service";
+import { AuthenticationService } from './services/authentication/authentication.service';
+import { AuthenticationGuard, LoggedGuard } from './services/authentication/gard.service';
+import { HttpService } from './services/http/http.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -31,13 +32,14 @@ const APP_PROVIDERS = [
   AuthenticationGuard,
   LoggedGuard,
   HttpService,
-  ActivitiesService
+  ActivitiesService,
+  ActivitiesUserService,
 ];
 
 export type StoreType = {
   state: InternalStateType,
   restoreInputValues: () => void,
-  disposeOldHosts: () => void
+  disposeOldHosts: () => void,
 };
 
 /**
@@ -47,7 +49,8 @@ export type StoreType = {
   bootstrap: [App],
   declarations: [
     App,
-    ActivitiesComponent
+    ActivitiesComponent,
+    ActivitiesUserComponent,
   ],
   imports: [ // import Angular's modules
     BrowserModule,
@@ -59,11 +62,11 @@ export type StoreType = {
     NgaModule.forRoot(),
     NgbModule.forRoot(),
     PagesModule,
-    routing
+    routing,
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
-    APP_PROVIDERS
-  ]
+    APP_PROVIDERS,
+  ],
 })
 
 export class AppModule {
