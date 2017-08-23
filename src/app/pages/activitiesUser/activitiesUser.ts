@@ -20,7 +20,9 @@ export class ActivitiesUserComponent implements OnInit {
     private listActivitiesSelect: Activity[];
     private userActivies: Activity[];
     private settings: Object;
-
+    selectedactivities: Object[] = [];
+    toDelActivities: Object[] = [];
+    selectedUser: User = new User();
     constructor(private service: ActivitiesUserService, private serviceActivities: ActivitiesService) {
         this.source = new LocalDataSource();
     }
@@ -51,7 +53,7 @@ export class ActivitiesUserComponent implements OnInit {
     private loadData(): void {
         this.users = [];
         this.listActivities = [];
-        this.listActivitiesSelect= [];
+        this.listActivitiesSelect = [];
         this.service.getUsers().then((users) => {
             users.forEach(user => {
                 this.users.push(user);
@@ -61,7 +63,7 @@ export class ActivitiesUserComponent implements OnInit {
             this.source.reset(true);
             this.source.load(users);
         });
-        this.serviceActivities.getActivities().then((activities) => {
+        this.serviceActivities.getActivitiesParent().then((activities) => {
             activities.forEach(activitie => {
                 this.listActivities.push(activitie);
                 this.listActivitiesSelect.push(activitie);
@@ -79,11 +81,45 @@ export class ActivitiesUserComponent implements OnInit {
 
     }
     public onRowSelect(event): void {
+        this.listActivitiesSelect = [];
+        this.listActivities.forEach(activitie => {
+            this.listActivitiesSelect.push(activitie);
+        });
         this.userActivies = [];
         console.log(event);
     const list = event.data.activities as Activity[];   
     list.forEach(element => {
         this.userActivies.push(element);
+        this.listActivitiesSelect.splice(this.listActivitiesSelect.indexOf(element) , 1 );
     }); 
+    this.selectedUser = event.data as User;   
+      }
+
+      public addActivity(event): void {
+     if ( this.selectedactivities.length > 0) {
+        this.selectedactivities.forEach(activitieID => {
+            const act = this.listActivitiesSelect.find( c => c.id === activitieID );
+            
+            this.listActivitiesSelect.splice(this.listActivitiesSelect.indexOf(act) , 1 );
+            this.userActivies.push(act);
+           
+        });
+      
+        this.selectedUser.activities = this.userActivies; 
+        this.service.saveUser(this.selectedUser);
+        this.selectedactivities = []; }
+    }
+       
+        public delActivity(event): void {
+            if ( this.toDelActivities.length > 0) { 
+               this.toDelActivities.forEach(activitieID => {
+                   const act = this.userActivies.find( c => c.id === activitieID );
+                   this.userActivies.splice(this.userActivies.indexOf(act) , 1 );
+                   this.listActivitiesSelect.push(act);
+            });
+            this.selectedUser.activities = this.userActivies; 
+            this.service.saveUser(this.selectedUser);
+            this.selectedUser.activities = this.userActivies; 
+               this.toDelActivities = []; }
       }
 }
