@@ -3,6 +3,7 @@ import { Pages } from './pages.component';
 import { ModuleWithProviders } from '@angular/core';
 import { ActivitiesComponent } from './activities/activities.component';
 import { ActivitiesUserComponent } from './activitiesUser/activitiesUser';
+import { PointageComponent } from './pointage/pointage';
 import { AuthenticationGuard, LoggedGuard } from '../services/authentication/gard.service';
 
 // noinspection TypeScriptValidateTypes
@@ -25,6 +26,7 @@ export const routes: Routes = [
         { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
         { path: 'activities', component: ActivitiesComponent },
         { path: 'activitiesUser', component: ActivitiesUserComponent },
+        { path: 'pointage', component: PointageComponent },
       ],
     },
   ],

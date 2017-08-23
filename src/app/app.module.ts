@@ -8,6 +8,8 @@ import { ActivitiesUserComponent } from './pages/activitiesUser/activitiesUser';
 import { ActivitiesUserService } from './services/activitiesUser/activitiesUser.service';
 import { ActivitiesComponent } from './pages/activities/activities.component';
 import { ActivitiesService } from './services/activities/activities.service';
+import { PointageComponent } from './pages/pointage/pointage';
+import { PointageService } from './services/pointage/pointage.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 /*
  * Platform and Environment providers/directives/pipes
@@ -34,6 +36,7 @@ const APP_PROVIDERS = [
   HttpService,
   ActivitiesService,
   ActivitiesUserService,
+  PointageService,
 ];
 
 export type StoreType = {
@@ -51,6 +54,7 @@ export type StoreType = {
     App,
     ActivitiesComponent,
     ActivitiesUserComponent,
+    PointageComponent,
   ],
   imports: [ // import Angular's modules
     BrowserModule,
