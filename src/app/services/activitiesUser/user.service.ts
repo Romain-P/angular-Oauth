@@ -41,9 +41,6 @@ export class UserService {
       .then(() => null)
       .catch(this.handleError);
   }
-<<<<<<< HEAD:src/app/services/activitiesUser/activitiesUser.service.ts
- 
-=======
 
   private formatUser(user: User): void {
     if (user.activities != null)
@@ -57,7 +54,6 @@ export class UserService {
       activity.subActivities.forEach(x => this.formatActivity(x));
   }
 
->>>>>>> 610a114ca217ab91a72bac16b542134c64bb17ec:src/app/services/activitiesUser/user.service.ts
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);

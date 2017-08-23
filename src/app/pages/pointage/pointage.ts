@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LocalDataSource } from 'ng2-smart-table';
-import { ActivitiesUserService } from '../../services/activitiesUser/activitiesUser.service';
 import { ActivitiesService } from '../../services/activities/activities.service';
 import { User } from '../../models/user';
 import { Observable } from 'rxjs/Rx';
@@ -15,7 +14,7 @@ import { Activity } from '../../models/activity';
 })
 export class PointageComponent implements OnInit {
   
-    constructor(private service: ActivitiesUserService ){
+    constructor(){
   
     }
 
