@@ -1,0 +1,50 @@
+<div class="widgets">
+    
+      <div class="row">
+        <ba-card cardTitle="" baCardClass="with-scroll" class="smart-table-container">
+         <ng2-smart-table [settings]="settings" [source]="source"
+         (rowSelect)="onRowSelect($event)"></ng2-smart-table>
+        </ba-card>
+      </div>
+<div  class="row" style="display:flex;justify-content:center;align-items:center;">
+
+     <div bacardblur="" zoom-in="" class="animated fadeIn card with-scroll col-lg-5" style="height: 300px;">
+        <div class="card-header clearfix">
+            <h3 class="card-title" translate="">Liste d'activités</h3>
+        </div>
+        <div class="card-body">
+            
+   
+          <select class="list-act form-control" multiple>
+              <option *ngFor="let activitie of listActivitiesSelect" [value]="activitie.Value">{{activitie.name}}</option>
+           </select>
+
+            
+        </div>
+    </div>
+
+    <div class="col-lg-1" style="justify-content: center;align-items: center;display: grid;">
+      
+        <button class="btn btn-success" style="margin-bottom: 50px;">Ajouter</button>
+        <br>
+        <button class="btn btn-danger">Supprimer</button>
+    
+    </div>
+
+
+   <div bacardblur="" zoom-in="" class="animated fadeIn card with-scroll col-lg-5" style="height: 300px;">
+      <div class="card-header clearfix">
+          <h3 class="card-title" translate="">Activités Affectées</h3>
+      </div>
+      <div class="card-body">
+          
+ 
+        <select class="list-act form-control" multiple>
+            <option *ngFor="let activitie of userActivies" [value]="activitie.Value">{{activitie.name}}</option>
+         </select>
+
+          
+      </div>
+  </div>
+
+  </div>
