@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 import {Activity} from '../../models/activity';
-import {AuthenticationService} from '../authentication/authentication.service';
 import {HttpService} from '../http/http.service';
 
 @Injectable()
 export class ActivitiesService {
-  private activitiesUrl = `http://10.64.0.41:8080/gta/activity`;
+  private activitiesUrl = `http://10.64.0.41:8080/gta//activity`;
 
-  constructor(private http: HttpService, private auth: AuthenticationService) {}
+  constructor(private http: HttpService) {}
 
   getActivities(): Promise<Activity[]> {
     return this.http.get(this.activitiesUrl)
@@ -19,6 +18,7 @@ export class ActivitiesService {
   }
 
   postActivity(activity: Activity): Promise<Activity> {
+    this.formatActivity(activity);
     return this.http.post(this.activitiesUrl, activity)
       .toPromise()
       .then(response => {
@@ -26,6 +26,7 @@ export class ActivitiesService {
   }
 
   saveActivity(activity: Activity): Promise<Activity> {
+    this.formatActivity(activity);
     return this.http.put(this.activitiesUrl, activity)
       .toPromise()
       .catch(this.handleError);
@@ -37,6 +38,13 @@ export class ActivitiesService {
       .toPromise()
       .then(() => null)
       .catch(this.handleError);
+  }
+
+  private formatActivity(activity: Activity): void {
+    if (activity.subActivities != null && activity.subActivities.length <= 0)
+      activity.subActivities = null;
+    else if (activity.subActivities != null)
+      activity.subActivities.forEach(x => this.formatActivity(x));
   }
 
   private handleError(error: any): Promise<any> {

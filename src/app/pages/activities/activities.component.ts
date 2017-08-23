@@ -54,14 +54,11 @@ export class ActivitiesComponent implements OnInit {
         code: {title: 'Code', type: 'string',},
         parentActivity: {
           title: 'Parent',
-          valuePrepareFunction: (value) => {
-            let act = value as Activity;
-            return act ? act.name : '/';
-          },
+          valuePrepareFunction: (value) => value ? value : '/',
+          type: 'html',
           editor: {
             type: 'list',
             config: {
-              selectText: 'Select...',
               list: this.listActivities,
             },
           },
@@ -76,8 +73,9 @@ export class ActivitiesComponent implements OnInit {
 
     this.service.getActivities().then((activities) => {
       activities.forEach(activity => {
-        this.activities.push(activity);
-        this.listActivities.push({value: activity.id, title: activity.name});
+        this.activities.push(JSON.parse(JSON.stringify(activity)) as Activity);
+        this.listActivities.push({value: activity.name, title: activity.name});
+        activity.parentActivity = activity.parentActivity ? activity.parentActivity.name : null;
       });
       this.settings = this.loadTableSettings();
 
@@ -87,10 +85,10 @@ export class ActivitiesComponent implements OnInit {
   }
 
   private castParentActivity(activity: Activity): void {
-    if (activity.parentActivity !== '' && typeof activity.parentActivity !== "object") {
-      activity.parentActivity = this.activities.find(x => x.id == +activity.parentActivity);
-    } else{
-      activity.parentActivity = null as Activity;}
+    if (activity.parentActivity !== '' && typeof activity.parentActivity !== "object")
+      activity.parentActivity = this.activities.find(x => x.name === activity.parentActivity);
+    else
+      activity.parentActivity = null as Activity;
   }
   public onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete this activity?')) {
