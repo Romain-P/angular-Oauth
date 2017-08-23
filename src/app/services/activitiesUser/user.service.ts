@@ -3,10 +3,11 @@ import 'rxjs/add/operator/toPromise';
 import { User } from '../../models/user';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {HttpService} from '../http/http.service';
+import {Activity} from "../../models/activity";
 
 @Injectable()
-export class ActivitiesUserService {
-  private usersUrl = `http://10.64.0.41:8080/gta/user`;
+export class UserService {
+  private usersUrl = `http://localhost:8080/user`;
 
   constructor(private http: HttpService, private auth: AuthenticationService) {}
 
@@ -19,6 +20,7 @@ export class ActivitiesUserService {
   }
 
   postUser(activity: User): Promise<User> {
+    this.formatUser(activity);
     return this.http.post(this.usersUrl, activity)
       .toPromise()
       .then(response => {
@@ -26,6 +28,7 @@ export class ActivitiesUserService {
   }
 
   saveUser(activity: User): Promise<User> {
+    this.formatUser(activity);
     return this.http.put(this.usersUrl, activity)
       .toPromise()
       .catch(this.handleError);
@@ -37,6 +40,18 @@ export class ActivitiesUserService {
       .toPromise()
       .then(() => null)
       .catch(this.handleError);
+  }
+
+  private formatUser(user: User): void {
+    if (user.activities != null)
+      user.activities.forEach(x => this.formatActivity(x))
+  }
+
+  private formatActivity(activity: Activity): void {
+    if (activity.subActivities != null && activity.subActivities.length <= 0)
+      activity.subActivities = null;
+    else if (activity.subActivities != null)
+      activity.subActivities.forEach(x => this.formatActivity(x));
   }
 
   private handleError(error: any): Promise<any> {

@@ -3,9 +3,11 @@ export class Activity {
     name: string;
     code: string;
     parentActivity: any;
+    subActivities: Activity[];
+    creationDate: number;
+    modificationDate: number;
 
     constructor(id?: number) {
-      if (id)
-        this.id = id;
+      if (id) this.id = id;
     }
 }

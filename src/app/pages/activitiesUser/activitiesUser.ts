@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LocalDataSource } from 'ng2-smart-table';
-import { ActivitiesUserService } from '../../services/activitiesUser/activitiesUser.service';
+import { UserService } from '../../services/activitiesUser/user.service';
 import { ActivitiesService } from '../../services/activities/activities.service';
 import { User } from '../../models/user';
 import { Observable } from 'rxjs/Rx';
@@ -23,7 +23,7 @@ export class ActivitiesUserComponent implements OnInit {
     selectedactivities: Object[] = [];
     toDelActivities: Object[] = [];
     selectedUser: User = new User();
-    constructor(private service: ActivitiesUserService, private serviceActivities: ActivitiesService) {
+    constructor(private service: UserService, private serviceActivities: ActivitiesService) {
         this.source = new LocalDataSource();
     }
 
@@ -87,39 +87,39 @@ export class ActivitiesUserComponent implements OnInit {
         });
         this.userActivies = [];
         console.log(event);
-    const list = event.data.activities as Activity[];   
+    const list = event.data.activities as Activity[];
     list.forEach(element => {
         this.userActivies.push(element);
         this.listActivitiesSelect.splice(this.listActivitiesSelect.indexOf(element) , 1 );
-    }); 
-    this.selectedUser = event.data as User;   
+    });
+    this.selectedUser = event.data as User;
       }
 
       public addActivity(event): void {
      if ( this.selectedactivities.length > 0) {
         this.selectedactivities.forEach(activitieID => {
             const act = this.listActivitiesSelect.find( c => c.id === activitieID );
-            
+
             this.listActivitiesSelect.splice(this.listActivitiesSelect.indexOf(act) , 1 );
             this.userActivies.push(act);
-           
+
         });
-      
-        this.selectedUser.activities = this.userActivies; 
+
+        this.selectedUser.activities = this.userActivies;
         this.service.saveUser(this.selectedUser);
         this.selectedactivities = []; }
     }
-       
+
         public delActivity(event): void {
-            if ( this.toDelActivities.length > 0) { 
+            if ( this.toDelActivities.length > 0) {
                this.toDelActivities.forEach(activitieID => {
                    const act = this.userActivies.find( c => c.id === activitieID );
                    this.userActivies.splice(this.userActivies.indexOf(act) , 1 );
                    this.listActivitiesSelect.push(act);
             });
-            this.selectedUser.activities = this.userActivies; 
+            this.selectedUser.activities = this.userActivies;
             this.service.saveUser(this.selectedUser);
-            this.selectedUser.activities = this.userActivies; 
+            this.selectedUser.activities = this.userActivies;
                this.toDelActivities = []; }
       }
 }
