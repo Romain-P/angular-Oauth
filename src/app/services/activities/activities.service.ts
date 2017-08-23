@@ -5,12 +5,21 @@ import {HttpService} from '../http/http.service';
 
 @Injectable()
 export class ActivitiesService {
-  private activitiesUrl = `http://10.64.0.41:8080/gta//activity`;
+  private activitiesUrl = `http://localhost:8080/activity`;
+  private activitiesParents = 'http://localhost:8080/activity/parents';
 
   constructor(private http: HttpService) {}
 
   getActivities(): Promise<Activity[]> {
     return this.http.get(this.activitiesUrl)
+      .toPromise()
+      .then(response => {
+        return response.json() as Activity[];
+      }).catch(this.handleError);
+  }
+
+  getActivitiesParent(): Promise<Activity[]> {
+    return this.http.get(this.activitiesParents)
       .toPromise()
       .then(response => {
         return response.json() as Activity[];

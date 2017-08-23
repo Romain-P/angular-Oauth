@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ActivitiesService } from '../../services/activities/activities.service';
 import { Activity } from '../../models/activity';
-import { Observable } from 'rxjs/Rx';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'activities',
@@ -49,20 +46,10 @@ export class ActivitiesComponent implements OnInit {
       },
 
       columns: {
-        id: {title: 'ID', editable: false, type: 'number',},
         name: {title: 'Nom', type: 'string',},
         code: {title: 'Code', type: 'string',},
-        parentActivity: {
-          title: 'Parent',
-          valuePrepareFunction: (value) => value ? value : '/',
-          type: 'html',
-          editor: {
-            type: 'list',
-            config: {
-              list: this.listActivities,
-            },
-          },
-        },
+        creationDate: {title: 'Créé le', type: 'string'},
+        modificationDate: {title: 'Modifié le', type: 'string'},
       },
     };
   }

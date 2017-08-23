@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ActivitiesUserComponent } from './pages/activitiesUser/activitiesUser';
-import { ActivitiesUserService } from './services/activitiesUser/activitiesUser.service';
+import { UserService } from './services/activitiesUser/user.service';
 import { ActivitiesComponent } from './pages/activities/activities.component';
 import { ActivitiesService } from './services/activities/activities.service';
 import { PointageComponent } from './pages/pointage/pointage';
@@ -35,7 +35,7 @@ const APP_PROVIDERS = [
   LoggedGuard,
   HttpService,
   ActivitiesService,
-  ActivitiesUserService,
+  UserService,
   PointageService,
 ];
 
@@ -55,6 +55,7 @@ export type StoreType = {
     ActivitiesComponent,
     ActivitiesUserComponent,
     PointageComponent,
+    
   ],
   imports: [ // import Angular's modules
     BrowserModule,
