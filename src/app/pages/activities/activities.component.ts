@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
-import {LocalDataSource} from 'ng2-smart-table';
-import {ActivitiesService} from '../../services/activities/activities.service';
-import {Activity} from '../../models/activity';
-import {Observable} from 'rxjs/Rx';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { LocalDataSource } from 'ng2-smart-table';
+import { ActivitiesService } from '../../services/activities/activities.service';
+import { Activity } from '../../models/activity';
+import { Observable } from 'rxjs/Rx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'activities',
