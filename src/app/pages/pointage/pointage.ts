@@ -35,10 +35,13 @@ export class PointageComponent implements OnInit {
 
         this.listSemaine.push(new ListElementComponent( 0 , `----Semaine----` ) );    
         for (let _i = 1 ; _i < 53; _i++) {
-        
+      
             this.listSemaine.push(new ListElementComponent( _i , `${_i}- du  ${this.datedeb} au ${this.datefin}` ) );
         }
     }
 
+   
+      
+        
    
 }
