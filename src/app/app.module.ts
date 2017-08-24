@@ -26,6 +26,8 @@ import { AuthenticationService } from './services/authentication/authentication.
 import { AuthenticationGuard, LoggedGuard } from './services/authentication/gard.service';
 import { HttpService } from './services/http/http.service';
 
+
+
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,

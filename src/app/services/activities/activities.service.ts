@@ -5,8 +5,8 @@ import {HttpService} from '../http/http.service';
 
 @Injectable()
 export class ActivitiesService {
-  private activitiesUrl = `http://localhost:8080/activity`;
-  private activitiesParents = 'http://localhost:8080/activity/parents';
+  private activitiesUrl = `http://10.64.0.41:8080/gta/activity`;
+  private activitiesParents = 'http://10.64.0.41:8080/gta/activity/parents';
 
   constructor(private http: HttpService) {}
 
