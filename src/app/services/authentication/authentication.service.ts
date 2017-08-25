@@ -52,6 +52,7 @@ export class AuthenticationService {
   }
 
   public invalidToken(error: any): Observable<any> {
+    console.log(error);
     if (error && error.json().error === "invalid_token") {
 
       localStorage.removeItem('token');

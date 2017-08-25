@@ -4,6 +4,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { ActivitiesComponent } from './activities/activities.component';
 import { ActivitiesUserComponent } from './activitiesUser/activitiesUser';
 import { AuthenticationGuard, LoggedGuard } from '../services/authentication/gard.service';
+import {ActivitiesManagerComponent} from "./activities/activitiesManager.component";
 
 // noinspection TypeScriptValidateTypes
 
@@ -23,7 +24,7 @@ export const routes: Routes = [
       children: [
         { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
         { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
-        { path: 'activities', component: ActivitiesComponent },
+        { path: 'activities', component: ActivitiesManagerComponent },
         { path: 'activitiesUser', component: ActivitiesUserComponent },
       ],
     },

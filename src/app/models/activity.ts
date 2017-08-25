@@ -2,7 +2,7 @@ export class Activity {
     id: number;
     name: string;
     code: string;
-    parentActivity: any;
+    parentActivity: Activity;
     subActivities: Activity[];
     creationDate: number;
     modificationDate: number;

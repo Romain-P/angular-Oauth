@@ -26,11 +26,20 @@ export class ActivitiesService {
       }).catch(this.handleError);
   }
 
+  getParents(id: number): Promise<Activity[]> {
+    return this.http.get(this.activitiesParents + '/' + id)
+      .toPromise()
+      .then(response => {
+        return response.json() as Activity[];
+      }).catch(this.handleError);
+  }
+
   postActivity(activity: Activity): Promise<Activity> {
     this.formatActivity(activity);
     return this.http.post(this.activitiesUrl, activity)
       .toPromise()
       .then(response => {
+        return response.json();
       }).catch(this.handleError);
   }
 

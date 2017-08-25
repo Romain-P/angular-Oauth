@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
-import { ActivitiesService } from '../../services/activities/activities.service';
-import { Activity } from '../../models/activity';
+import {Component, Input, OnInit} from '@angular/core';
+import {LocalDataSource} from 'ng2-smart-table';
+import {ActivitiesService} from '../../services/activities/activities.service';
+import {Activity} from '../../models/activity';
+import {ActivitiesManagerComponent} from "./activitiesManager.component";
+import {User} from "../../models/user";
 
 @Component({
   selector: 'activities',
@@ -10,9 +12,14 @@ import { Activity } from '../../models/activity';
 })
 export class ActivitiesComponent implements OnInit {
   private source: LocalDataSource;
-  private activities: Activity[];
-  private listActivities: Object[];
   private settings: Object;
+
+  @Input()
+  private parent: Activity;
+  @Input()
+  private title: string;
+  @Input()
+  private manager: ActivitiesManagerComponent;
 
   constructor(private service: ActivitiesService) {
     this.source = new LocalDataSource();
@@ -45,59 +52,84 @@ export class ActivitiesComponent implements OnInit {
         confirmDelete: true,
       },
 
-      columns: {
-        name: {title: 'Nom', type: 'string',},
-        code: {title: 'Code', type: 'string',},
-        creationDate: {title: 'Créé le', type: 'string'},
-        modificationDate: {title: 'Modifié le', type: 'string'},
-      },
+      columns: this.parent ?
+        {
+          name: {title: 'Nom', type: 'string',},
+          creationDate: {title: 'Création', type: 'string', editable: false},
+          modificationDate: {title: 'Modification', type: 'string', editable: false},
+          lastEditor: {title: 'Modifié par', type: 'string', editable: false,
+            valuePrepareFunction: (value) =>  {
+              let user = value as User;
+              return user.name + " " + user.lastname;
+            },
+          }
+        } :
+        {
+          name: {title: 'Nom', type: 'string',},
+          code: {title: 'Code', type: 'string',},
+          creationDate: {title: 'Création', type: 'string', editable: false},
+          modificationDate: {title: 'Modification', type: 'string', editable: false},
+          lastEditor: {
+            title: 'Modifié par',
+            type: 'string',
+            editable: false,
+            valuePrepareFunction: (value) =>  {
+              let user = value as User;
+              return user.name + " " + user.lastname;
+            },
+          }
+        }
+      ,
     };
   }
 
+  private rowSelected(event: any): void {
+    let activity = event.data as Activity;
+    this.manager.childrenRequested(activity);
+  }
+
   private loadData(): void {
-    this.activities = [];
-    this.listActivities = [];
+    let future = !this.parent ? this.service.getActivitiesParent() : this.service.getParents(this.parent.id);
 
-    this.service.getActivities().then((activities) => {
-      activities.forEach(activity => {
-        this.activities.push(JSON.parse(JSON.stringify(activity)) as Activity);
-        this.listActivities.push({value: activity.name, title: activity.name});
-        activity.parentActivity = activity.parentActivity ? activity.parentActivity.name : null;
-      });
+    future.then((activities) => {
       this.settings = this.loadTableSettings();
-
       this.source.reset(true);
       this.source.load(activities);
     });
   }
 
-  private castParentActivity(activity: Activity): void {
-    if (activity.parentActivity !== '' && typeof activity.parentActivity !== "object")
-      activity.parentActivity = this.activities.find(x => x.name === activity.parentActivity);
-    else
-      activity.parentActivity = null as Activity;
-  }
   public onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete this activity?')) {
       let activity = event.data as Activity;
 
       this.service.deleteActivity(+activity.id).then(() => this.loadData());
       event.confirm.resolve();
-    } else{
-      event.confirm.reject();}
+    } else {
+      event.confirm.reject();
+    }
   }
+
   public onCreateConfirm(event): void {
     let activity = event.newData as Activity;
 
-    this.castParentActivity(activity);
     activity.id = 0;
 
-    this.service.postActivity(activity).then(() => this.loadData());
+    if (this.parent) {
+      activity.parentActivity = this.parent; //Deep copy of activity
+      activity.code = this.parent.code;
+    } else activity.parentActivity = null;
+
+    this.service.postActivity(activity).then(x => {
+      x.subActivities = null;
+      this.parent.subActivities.push(x);
+      activity.id = x.id;
+      this.loadData()
+    });
   }
+
   public onEditConfirm(event): void {
     console.log(event);
     let activity = event.newData as Activity;
-    this.castParentActivity(activity);
 
     this.service.saveActivity(activity).then(() => this.loadData());
   }
