@@ -8,6 +8,8 @@ import { ActivitiesUserComponent } from './pages/activitiesUser/activitiesUser';
 import { UserService } from './services/activitiesUser/user.service';
 import { ActivitiesComponent } from './pages/activities/activities.component';
 import { ActivitiesService } from './services/activities/activities.service';
+import { PointageComponent } from './pages/pointage/pointage';
+import { PointageService } from './services/pointage/pointage.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 /*
  * Platform and Environment providers/directives/pipes
@@ -25,6 +27,8 @@ import { AuthenticationGuard, LoggedGuard } from './services/authentication/gard
 import { HttpService } from './services/http/http.service';
 import {ActivitiesManagerComponent} from "./pages/activities/activitiesManager.component";
 
+
+
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
@@ -35,6 +39,7 @@ const APP_PROVIDERS = [
   HttpService,
   ActivitiesService,
   UserService,
+  PointageService,
 ];
 
 export type StoreType = {
@@ -52,7 +57,8 @@ export type StoreType = {
     App,
     ActivitiesComponent,
     ActivitiesUserComponent,
-    ActivitiesManagerComponent
+    ActivitiesManagerComponent,
+    PointageComponent,
   ],
   imports: [ // import Angular's modules
     BrowserModule,

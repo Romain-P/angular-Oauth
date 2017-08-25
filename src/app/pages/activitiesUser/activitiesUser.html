@@ -15,7 +15,8 @@
         </div>
         <div class="card-body">
           <select class="list-act form-control " multiple id="ListActivite" [(ngModel)]="selectedactivities"  >
-              <option *ngFor="let activitie of listActivitiesSelect" [ngValue]="activitie.id">{{activitie.name}}</option>
+              <option *ngFor="let activitie of listActivitiesSelect" 
+              [ngValue]="activitie.id">{{activitie.name}}</option>
            </select>
         </div>    
     </div>
@@ -32,10 +33,12 @@
           <h3 class="card-title" translate="">Activités Affectées</h3>
       </div>
       <div class="card-body">
-        <select class="list-act form-control " multiple id="ListSelection" [(ngModel)]="toDelActivities">
+        <select class="list-act form-control droppable" multiple id="ListSelection" 
+        [(ngModel)]="toDelActivities">
             <option *ngFor="let activitie of userActivies" [ngValue]="activitie.id">{{activitie.name}}</option>
          </select>       
       </div>
   </div>
+
 
   </div>

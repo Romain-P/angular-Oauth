@@ -23,7 +23,7 @@ export const PAGES_MENU = [
             selected: false,
             expanded: false,
             order: 100,
-          }
+          },
         },
         
       },
@@ -33,6 +33,19 @@ export const PAGES_MENU = [
           menu: {
             title: 'general.menu.activitiesUser',
             icon: 'ion-bag',
+            selected: false,
+            expanded: false,
+            order: 100,
+          },
+        },
+        
+      },
+      {
+        path: 'pointage',
+        data: {
+          menu: {
+            title: 'general.menu.pointage',
+            icon: 'ion-compass',
             selected: false,
             expanded: false,
             order: 100,

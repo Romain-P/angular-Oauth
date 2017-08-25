@@ -42,11 +42,15 @@
       color: $default-text;
       line-height: 35px;
     }
-
+    .ng2-smart-row.selected{
+      background:#00abff !important;
+    }
+    
     tbody {
       tr {
         color: $default-text;
       }
+    
       tr:hover {
         background: rgba(0, 0, 0, 0.03);
       }
@@ -93,6 +97,7 @@
       display: flex;
       justify-content: center;
     }
+ 
   }
 }
 

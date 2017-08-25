@@ -44,7 +44,9 @@
       "menu_level_1_2": "Menu Level 1.2",
       "menu_level_1_2_1": "Menu Level 1.2.1",
       "external_link": "External Link",
-      "activities" :"Activities"
+      "activities" :"Activities",
+      "activitiesUser" :"Affectation",
+      "pointage" : "Counting"
     },
     "created_with": "Created with"
   },

@@ -1,0 +1,78 @@
+<div  class="row" style="display:flex;justify-content:center;align-items:center;">
+ <div bacardblur="" zoom-in="" class="animated fadeIn card with-scroll col-lg-3">
+        <div class="card-header clearfix">
+            <h3 class="card-title" translate="">Semaine</h3>
+        </div>
+        <div class="card-body">
+                <select class="list-act form-control "  [(ngModel)]="semaienSelectionnee"  >
+                        <option *ngFor="let semaine of listSemaine" 
+                        [ngValue]="semaine.id">{{semaine.titre}}</option>
+                     </select>
+        </div>    
+    </div>
+    <div bacardblur="" zoom-in="" class="animated fadeIn card with-scroll col-lg-2">
+            <div class="card-header clearfix">
+                <h3 class="card-title" translate="">Année</h3>
+            </div>
+            <div class="card-body">
+                    <select class="list-act form-control "  [(ngModel)]="anneSelectionne"  >
+                            <option *ngFor="let annee of listAnnee" 
+                            [ngValue]="annee.id">{{annee.titre}}</option>
+                         </select>
+            </div>    
+        </div>
+    </div>
+<div class="animated fadeIn card with-scroll">
+<div class="table-responsive card-body">
+        <div class="card-header clearfix">
+                <h3 class="card-title" translate="">Saisissez vos pointages</h3>
+         </div>  
+         <br>  
+<div class="card-body">
+   
+<table style="width:100%" class="table" id="table-pointage">
+<thead>    
+    <tr>
+         <th  >Activité </th>
+          <th>Lundi</th>
+          <th>Mardi</th> 
+          <th>Mercredi</th>
+          <th>Jeudi</th>
+          <th>Vendredi</th>
+          <th>Samedi</th>
+          <th>Diamnche</th>
+        </tr>
+    </thead>  
+    <tbody>      
+        <tr>
+         <td>Activité</td>
+          <td><input  onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+             class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+          <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+          <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+          <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+          <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+          <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+          <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+
+        </tr>
+        <tr>
+        <td>Activité</td>
+        <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+        <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+        <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+        <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+        <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+        <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+        <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+        </tr>
+    </tbody>  
+      </table>
+    </div>
+    </div>
+    <div>
+    <button href="#" class="btn  btn-success">
+            Valider <i class="ion-checkmark-round"></i>
+    </button>
+    </div>
+</div>
