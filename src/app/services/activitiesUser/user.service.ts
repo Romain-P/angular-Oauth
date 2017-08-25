@@ -18,6 +18,13 @@ export class UserService {
         return response.json() as User[];
       }).catch(this.handleError);
   }
+  getUser(id: number): Promise<User> {
+    return this.http.get(`${this.usersUrl}/${id}`)
+      .toPromise()
+      .then(response => {
+        return response.json() as User;
+      }).catch(this.handleError);
+  }
 
   postUser(activity: User): Promise<User> {
     this.formatUser(activity);

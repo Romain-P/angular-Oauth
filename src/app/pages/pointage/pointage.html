@@ -28,51 +28,16 @@
                 <h3 class="card-title" translate="">Saisissez vos pointages</h3>
          </div>  
          <br>  
-<div class="card-body">
-   
-<table style="width:100%" class="table" id="table-pointage">
-<thead>    
-    <tr>
-         <th  >Activité </th>
-          <th>Lundi</th>
-          <th>Mardi</th> 
-          <th>Mercredi</th>
-          <th>Jeudi</th>
-          <th>Vendredi</th>
-          <th>Samedi</th>
-          <th>Diamnche</th>
-        </tr>
-    </thead>  
-    <tbody>      
-        <tr>
-         <td>Activité</td>
-          <td><input  onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-             class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
-          <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
-          <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
-          <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
-          <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
-          <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
-          <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
+         <div class="widgets">
+            <div class="row">
+              <h3>{{title}}</h3>
+              <ba-card cardTitle="" baCardClass="with-scroll" class="smart-table-container">
+                <ng2-smart-table [settings]="settings" [source]="source"
+                                 (editConfirm)="onEditConfirm($event)">
+                </ng2-smart-table>
+              </ba-card>
+            </div>
+          </div>
+</div>
 
-        </tr>
-        <tr>
-        <td>Activité</td>
-        <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
-        <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
-        <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
-        <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
-        <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
-        <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
-        <td><input class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></td>
-        </tr>
-    </tbody>  
-      </table>
-    </div>
-    </div>
-    <div>
-    <button href="#" class="btn  btn-success">
-            Valider <i class="ion-checkmark-round"></i>
-    </button>
-    </div>
 </div>

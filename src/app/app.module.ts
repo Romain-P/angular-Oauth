@@ -25,7 +25,7 @@ import { PagesModule } from './pages/pages.module';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { AuthenticationGuard, LoggedGuard } from './services/authentication/gard.service';
 import { HttpService } from './services/http/http.service';
-import {ActivitiesManagerComponent} from "./pages/activities/activitiesManager.component";
+import { ActivitiesManagerComponent} from "./pages/activities/activitiesManager.component";
 
 
 
