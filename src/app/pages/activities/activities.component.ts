@@ -55,10 +55,21 @@ export class ActivitiesComponent implements OnInit {
       columns: this.parent ?
         {
           name: {title: 'Nom', type: 'string',},
-          creationDate: {title: 'Création', type: 'string', editable: false},
-          modificationDate: {title: 'Modification', type: 'string', editable: false},
-          lastEditor: {title: 'Modifié par', type: 'string', editable: false,
-            valuePrepareFunction: (value) =>  {
+          creationDate: {
+            title: 'Création',
+            type: 'string',
+            editable: false,
+            valuePrepareFunction: (value) => this.formatDate(value)
+          },
+          modificationDate: {
+            title: 'Modification',
+            type: 'string',
+            editable: false,
+            valuePrepareFunction: (value) => this.formatDate(value)
+          },
+          lastEditor: {
+            title: 'Modifié par', type: 'string', editable: false,
+            valuePrepareFunction: (value) => {
               let user = value as User;
               return user.name + " " + user.lastname;
             },
@@ -67,13 +78,23 @@ export class ActivitiesComponent implements OnInit {
         {
           name: {title: 'Nom', type: 'string',},
           code: {title: 'Code', type: 'string',},
-          creationDate: {title: 'Création', type: 'string', editable: false},
-          modificationDate: {title: 'Modification', type: 'string', editable: false},
+          creationDate: {
+            title: 'Création',
+            type: 'string',
+            editable: false,
+            valuePrepareFunction: (value) => this.formatDate(value)
+          },
+          modificationDate: {
+            title: 'Modification',
+            type: 'string',
+            editable: false,
+            valuePrepareFunction: (value) => this.formatDate(value)
+          },
           lastEditor: {
             title: 'Modifié par',
             type: 'string',
             editable: false,
-            valuePrepareFunction: (value) =>  {
+            valuePrepareFunction: (value) => {
               let user = value as User;
               return user.name + " " + user.lastname;
             },
@@ -81,6 +102,20 @@ export class ActivitiesComponent implements OnInit {
         }
       ,
     };
+  }
+
+  private formatDate(time: number): string {
+    let date = new Date(time);
+
+    return this.formatNumber(date.getDate()) + '/' +
+      this.formatNumber(date.getMonth() + 1) + '/' +
+      date.getFullYear() + ' ' +
+      this.formatNumber(date.getHours()) + ':' +
+      this.formatNumber(date.getMinutes());
+  }
+
+  private formatNumber(number: number): string {
+    return number < 10 ? "0" + number : number.toString();
   }
 
   private rowSelected(event: any): void {
@@ -111,7 +146,7 @@ export class ActivitiesComponent implements OnInit {
 
   public onCreateConfirm(event): void {
     let activity = event.newData as Activity;
-
+    delete activity.lastEditor;
     activity.id = 0;
 
     if (this.parent) {
@@ -119,12 +154,15 @@ export class ActivitiesComponent implements OnInit {
       activity.code = this.parent.code;
     } else activity.parentActivity = null;
 
-    this.service.postActivity(activity).then(x => {
-      x.subActivities = null;
-      this.parent.subActivities.push(x);
-      activity.id = x.id;
-      this.loadData()
-    });
+    this.service.postActivity(activity)
+      .then(x => {
+        x.subActivities = null;
+        if (this.parent)
+          this.parent.subActivities.push(x);
+        activity.id = x.id;
+        this.loadData()
+      });
+
   }
 
   public onEditConfirm(event): void {

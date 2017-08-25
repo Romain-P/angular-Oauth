@@ -1,4 +1,6 @@
 
+import {User} from "./user";
+import {Activity} from "./activity";
 export class Pointage {
     id: number;
     weekNumber: number;
@@ -10,11 +12,11 @@ export class Pointage {
     friday: number;
     saturday: number;
     sunday: number;
-    activity: any;
-    user: any;
-   
+    activity: Activity;
+    user: User;
+
     constructor(id?: number) {
-      if (id) { 
+      if (id) {
             this.id = id;
         }
     }

@@ -71,15 +71,6 @@ export class ActivitiesUserComponent implements OnInit {
         });
     }
 
-    private castParentUser(user: User): void {
-        if (user.superior !== '' && typeof user.superior !== 'object') {
-            user.superior = this.users.find(x => x.id === +user.superior);
-        } else {
-        user.superior = null as User;
-    }
-
-
-    }
     public onRowSelect(event): void {
         this.listActivitiesSelect = [];
         this.listActivities.forEach(activitie => {

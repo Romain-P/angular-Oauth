@@ -1,17 +1,16 @@
+import {Activity} from "./activity";
 export class User {
     id: number;
     username: string;
     name: string;
     lastname: string;
-    avatar: any;
+    avatar: any[];
     email: string;
-    superior: any;
-    roles: any;
-    activities: any;
+    superior: User;
+    roles: string[];
+    activities: Activity[];
 
     constructor(id?: number) {
-      if (id) { 
-            this.id = id;
-         }
+      if (id) this.id = id;
     }
 }
