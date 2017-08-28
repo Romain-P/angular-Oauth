@@ -27,7 +27,7 @@ export const routes: Routes = [
         { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
         { path: 'activities', component: ActivitiesManagerComponent },
         { path: 'activitiesUser', component: ActivitiesUserComponent },
-        { path: 'pointage', component: PointageComponent },
+        { path: 'pointage', component: PointageManagerComponent },
       ],
     },
   ],

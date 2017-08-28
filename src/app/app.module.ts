@@ -25,8 +25,8 @@ import { PagesModule } from './pages/pages.module';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { AuthenticationGuard, LoggedGuard } from './services/authentication/gard.service';
 import { HttpService } from './services/http/http.service';
-import { ActivitiesManagerComponent} from "./pages/activities/activitiesManager.component";
-
+import { ActivitiesManagerComponent} from './pages/activities/activitiesManager.component';
+import { PointageManagerComponent } from './pages/pointage/pointageManager';
 
 
 // Application wide providers
@@ -59,6 +59,7 @@ export type StoreType = {
     ActivitiesUserComponent,
     ActivitiesManagerComponent,
     PointageComponent,
+    PointageManagerComponent,
   ],
   imports: [ // import Angular's modules
     BrowserModule,

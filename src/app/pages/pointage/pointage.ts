@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Observable } from 'rxjs/Rx';
@@ -9,6 +9,7 @@ import { ListElementComponent } from './list.component';
 import { ActivitiesService } from '../../services/activities/activities.service';
 import { UserService } from '../../services/activitiesUser/user.service';
 import { PointageService } from '../../services/pointage/pointage.service';
+import { PointageManagerComponent } from './pointageManager';
 
 import { User } from '../../models/user';
 import { Activity } from '../../models/activity';
@@ -22,7 +23,12 @@ import { Pointage } from '../../models/pointage';
 })
 
 export class PointageComponent implements OnInit {
- 
+  @Input()
+  private parent: Activity;
+
+  @Input()
+  private manager: PointageManagerComponent;
+
     listSemaine: ListElementComponent[] = [];
     semaienSelectionnee: object;
     listAnnee: ListElementComponent[]= [];
@@ -63,18 +69,28 @@ export class PointageComponent implements OnInit {
         // this.source.load(activities);
         // getWeekNumber
     }
+
+
+    private rowSelected(event: any): void {
+      const pointage = event.data as Pointage;
+      this.manager.childrenRequested(pointage.activity);
+    }
+  
+
     private loadData(nbr: number, year: number): void {
     this.serviceUser.getUser(this.iduser).then((c) => {
       this.user = c as User;
-      this.user.activities.forEach( acttivitie => {
- /*  this.servicePointage.getWeekNumber(nbr, year).then(
-            weeks => {
-           let pointage = weeks.find(c => c.activity.id === acttivitie.id) as Pointage; 
+      let activities = this.parent ? this.parent.subActivities : this.user.activities;
+    
+      this.servicePointage.getWeekNumber(nbr, year).then(
+            weeks => {  
+            activities.forEach( activitie => {
+           let pointage = weeks.find(c => c.activity.id === activitie.id) as Pointage; 
            let week = new Week();
-           if (pointage !== null) {
+           if (pointage === undefined) {
              week.existe = false;
              week.pointage = new Pointage();
-             week.pointage.activity = acttivitie;
+             week.pointage.activity = activitie;
              week.pointage.user = this.user;
              week.pointage.weekNumber = nbr;
              week.pointage.year = year;
@@ -84,24 +100,12 @@ export class PointageComponent implements OnInit {
              week.existe = true;
          }
          this.listWeeks.push(week);
-         this.listPointages.push(week.pointage);        
-            },
-   );  */
-   let week = new Week();
-   week.existe = false;
-   week.pointage = new Pointage();
-   week.pointage.activity = acttivitie;
-   week.pointage.user = this.user;
-   week.pointage.weekNumber = nbr;
-   week.pointage.year = year;
-   this.listWeeks.push(week);
-   this.listPointages.push(week.pointage);      
- 
-      
-       });
-       
-      this.source.load(this.listPointages);
-      });
+         this.listPointages.push(week.pointage);       
+         
+            });
+          this.source.load(this.listPointages);  
+          });
+        }); 
      
       }
 
@@ -124,38 +128,39 @@ export class PointageComponent implements OnInit {
           columns:
             {
               activity: { 
+                filter: false,
                  title: 'Activité',
                  editable: false,
-                 type: Activity,
                  valuePrepareFunction: (value) => {
-                  let activity = value as Activity;
+                  const activity = value as Activity;
                   return activity ? activity.name : '';
                 },
                  editor: {
-                  type: Activity,
               
                    },
             },
-               monday: { title: 'Lundi', type: 'string' },
-               tuesday: { title: 'Mardi', type: 'string' },
-               wednesday: { title: 'Mercredi', type: 'string' },
-               thursday: { title: 'Jeudi', type: 'string' },
-               friday: { title: 'Vendredi', type: 'string' },
-               saturday: { title: 'Samedi', type: 'string' },
-               sunday: { title: 'Dimanche', type: 'string' },
+               monday: { filter: false, title: 'Lundi', type: 'string' },
+               tuesday: { filter: false, title: 'Mardi', type: 'string' },
+               wednesday: { filter: false, title: 'Mercredi', type: 'string' },
+               thursday: { filter: false, title: 'Jeudi', type: 'string' },
+               friday: { filter: false, title: 'Vendredi', type: 'string' },
+               saturday: { filter: false, title: 'Samedi', type: 'string' },
+               sunday: { filter: false, title: 'Dimanche', type: 'string' },
              
             },
         };
       }
+
+
       public onCreateConfirm(event): void {
-        let activity = event.newData as Activity;
+        const activity = event.newData as Activity;
        
     
       }
     
       public onEditConfirm(event): void {
         console.log(event);
-        let activity = event.newData as Activity;
+        const activity = event.newData as Activity;
     
       }
   
