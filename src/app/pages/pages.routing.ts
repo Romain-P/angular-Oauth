@@ -3,9 +3,9 @@ import { Pages } from './pages.component';
 import { ModuleWithProviders } from '@angular/core';
 import { ActivitiesComponent } from './activities/activities.component';
 import { ActivitiesUserComponent } from './activitiesUser/activitiesUser';
-import { PointageComponent } from './pointage/pointage';
+import { PointageManagerComponent } from './pointage/pointageManager';
 import { AuthenticationGuard, LoggedGuard } from '../services/authentication/gard.service';
-import {ActivitiesManagerComponent} from "./activities/activitiesManager.component";
+import { ActivitiesManagerComponent } from './activities/activitiesManager.component';
 
 // noinspection TypeScriptValidateTypes
 

@@ -123,15 +123,18 @@ export class PointageComponent implements OnInit {
     
           columns:
             {
-               activity: { 
-                title: 'Activité',
-                  valuePrepareFunction: (value) => {
-                    let activity = value as Activity;
-                    return activity ? activity.name : '';
-                  },
-                  editor: {
-                 
-                editable: 'textarea',}
+              activity: { 
+                 title: 'Activité',
+                 editable: false,
+                 type: Activity,
+                 valuePrepareFunction: (value) => {
+                  let activity = value as Activity;
+                  return activity ? activity.name : '';
+                },
+                 editor: {
+                  type: Activity,
+              
+                   },
             },
                monday: { title: 'Lundi', type: 'string' },
                tuesday: { title: 'Mardi', type: 'string' },
