@@ -71,17 +71,23 @@ export class ActivitiesUserComponent implements OnInit {
         });
     }
 
+   
     public onRowSelect(event): void {
         this.listActivitiesSelect = [];
         this.listActivities.forEach(activitie => {
-            this.listActivitiesSelect.push(activitie);
+            this.listActivitiesSelect.push(activitie as Activity);
         });
         this.userActivies = [];
         console.log(event);
     const list = event.data.activities as Activity[];
     list.forEach(element => {
-        this.userActivies.push(element);
-        this.listActivitiesSelect.splice(this.listActivitiesSelect.indexOf(element) , 1 );
+        this.userActivies.push(element as Activity);
+        let ind = this.listActivitiesSelect.indexOf(this.listActivitiesSelect
+            .find( c => c.id === element.id));
+        if ( ind >= 0) {
+            this.listActivitiesSelect.splice( ind , 1 ) ;
+        } 
+          
     });
     this.selectedUser = event.data as User;
       }
