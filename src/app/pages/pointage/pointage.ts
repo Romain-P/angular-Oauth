@@ -3,7 +3,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
-import { ListElementComponent } from './list.component';
 
 
 import { ActivitiesService } from '../../services/activities/activities.service';
@@ -16,6 +15,7 @@ import { Activity } from '../../models/activity';
 import { Week } from '../../models/week';
 import { Pointage } from '../../models/pointage';
 
+import { CustomEditorComponent } from './custom-render.component';
 @Component({
     selector: 'SaisiePointage',
     templateUrl: './pointage.html',
@@ -28,10 +28,9 @@ export class PointageComponent implements OnInit {
 
   @Input()
   private manager: PointageManagerComponent;
-
-    listSemaine: ListElementComponent[] = [];
+ 
     semaienSelectionnee: object;
-    listAnnee: ListElementComponent[]= [];
+  listAct: Activity[]=[];
     user: User;
     anneSelectionne: object;
     iduser: number = 0;
@@ -46,25 +45,20 @@ export class PointageComponent implements OnInit {
                       this.source = new LocalDataSource();
                     }
 
- datedeb = '';
- datefin = '';
-     ngOnInit() {
-         // setting select data
-        this.listAnnee.push(new ListElementComponent( 0 , `----Année----` ) );    
-        for (let _i = 2017 ; _i < 2018; _i++) {
-             this.listAnnee.push(new ListElementComponent( _i , `${_i}` ) );    
-        }
 
-        this.listSemaine.push(new ListElementComponent( 0 , `----Semaine----` ) );    
-        for (let _i = 1 ; _i < 53; _i++) {
-      
-            this.listSemaine.push(new ListElementComponent( _i , `${_i}- du  ${this.datedeb} au ${this.datefin}` ) );
-        }
+     ngOnInit() {
+  
 
         // setting table datasource
         this.iduser = +localStorage.getItem('userId') || 0;
   
-        this.settings = this.loadTableSettings();
+        this.serviceUser.getUser(this.iduser).then((c) => {
+          this.user = c as User;
+          this.listAct = this.user.activities;
+          this.settings = this.loadTableSettings();
+        },
+        );
+        
         this.loadData(28, 2017);
         // this.source.load(activities);
         // getWeekNumber
@@ -80,13 +74,13 @@ export class PointageComponent implements OnInit {
     private loadData(nbr: number, year: number): void {
     this.serviceUser.getUser(this.iduser).then((c) => {
       this.user = c as User;
-      let activities = this.parent ? this.parent.subActivities : this.user.activities;
-    
+      const activities = this.parent ? this.parent.subActivities : this.user.activities;
+      this.listAct = this.user.activities;
       this.servicePointage.getWeekNumber(nbr, year).then(
             weeks => {  
             activities.forEach( activitie => {
-           let pointage = weeks.find(c => c.activity.id === activitie.id) as Pointage; 
-           let week = new Week();
+           const pointage = weeks.find(c => c.activity.id === activitie.id) as Pointage; 
+           const week = new Week();
            if (pointage === undefined) {
              week.existe = false;
              week.pointage = new Pointage();
@@ -135,10 +129,8 @@ export class PointageComponent implements OnInit {
                   const activity = value as Activity;
                   return activity ? activity.name : '';
                 },
-                 editor: {
-              
-                   },
-            },
+                
+          },
                monday: { filter: false, title: 'Lundi', type: 'string' },
                tuesday: { filter: false, title: 'Mardi', type: 'string' },
                wednesday: { filter: false, title: 'Mercredi', type: 'string' },

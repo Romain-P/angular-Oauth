@@ -1,27 +1,4 @@
-<div  class="row" style="display:flex;justify-content:center;align-items:center;">
- <div bacardblur="" zoom-in="" class="animated fadeIn card with-scroll col-lg-3">
-        <div class="card-header clearfix">
-            <h3 class="card-title" translate="">Semaine</h3>
-        </div>
-        <div class="card-body">
-                <select class="list-act form-control "  [(ngModel)]="semaienSelectionnee"  >
-                        <option *ngFor="let semaine of listSemaine" 
-                        [ngValue]="semaine.id">{{semaine.titre}}</option>
-                     </select>
-        </div>    
-    </div>
-    <div bacardblur="" zoom-in="" class="animated fadeIn card with-scroll col-lg-2">
-            <div class="card-header clearfix">
-                <h3 class="card-title" translate="">Année</h3>
-            </div>
-            <div class="card-body">
-                    <select class="list-act form-control "  [(ngModel)]="anneSelectionne"  >
-                            <option *ngFor="let annee of listAnnee" 
-                            [ngValue]="annee.id">{{annee.titre}}</option>
-                         </select>
-            </div>    
-        </div>
-    </div>
+
 <div class="animated fadeIn card with-scroll">
 <div class="table-responsive card-body">
         <div class="card-header clearfix">
@@ -32,8 +9,11 @@
             <div class="row">
               <h3>{{title}}</h3>
               <ba-card cardTitle="" baCardClass="with-scroll" class="smart-table-container">
-                <ng2-smart-table [settings]="settings" [source]="source"
-                                 (editConfirm)="onEditConfirm($event)">
+                <ng2-smart-table  [settings]="settings" [source]="source"
+                (userRowSelect)="rowSelected($event)"
+                (deleteConfirm)="onDeleteConfirm($event)"
+                (editConfirm)="onEditConfirm($event)"
+                (createConfirm)="onCreateConfirm($event)">
                 </ng2-smart-table>
               </ba-card>
             </div>

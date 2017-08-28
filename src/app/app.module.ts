@@ -28,7 +28,6 @@ import { HttpService } from './services/http/http.service';
 import { ActivitiesManagerComponent} from './pages/activities/activitiesManager.component';
 import { PointageManagerComponent } from './pages/pointage/pointageManager';
 
-
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
