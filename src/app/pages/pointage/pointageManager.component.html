@@ -6,7 +6,8 @@
            <div class="card-body">
                    <select class="list-act form-control "  [(ngModel)]="semaienSelectionnee"  >
                            <option *ngFor="let semaine of listSemaine"
-                           [ngValue]="semaine.id">{{semaine.titre}}</option>
+                           [selected]="semaine.id === weekselected"
+                           [ngValue]="semaine.id"  >{{semaine.titre}}</option>
                         </select>
            </div>
        </div>
@@ -17,6 +18,7 @@
         <div class="card-body">
                 <select class="list-act form-control "  [(ngModel)]="anneSelectionne"  >
                         <option *ngFor="let annee of listAnnee"
+                        [selected]="annee.id === yearselected"
                         [ngValue]="annee.id">{{annee.titre}}</option>
                      </select>
         </div>

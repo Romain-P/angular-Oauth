@@ -9,8 +9,9 @@ import {Activity} from '../../models/activity';
 export class PointageManagerComponent implements OnInit {
   private tables: Table[];
   private manager: PointageManagerComponent;
-  public selected: string;
-
+   selected: string;
+   weekselected: number;
+   yearselected: number;
   constructor() {
     this.tables = [];
     this.manager = this;
@@ -32,6 +33,8 @@ export class PointageManagerComponent implements OnInit {
       this.listSemaine.push(new ListElementComponent(i, `${i}-semaine du  ${this.getDate(i, 2017)}`));
     }
     this.selected = ""; //TODO
+    this.yearselected = 2017;
+    this.weekselected = 52;
     this.tables.push(new Table('/', null));
   }
 

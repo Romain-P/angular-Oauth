@@ -141,8 +141,15 @@ export class PointageComponent implements OnInit {
   }
 
   public onEditConfirm(event): void {
-    console.log(event);
-    const activity = event.newData as Activity;
-
+    let pointage = event.newData as Pointage;
+    let sem = this.listWeeks.find( x => x.pointage.id === pointage.id 
+      || (x.pointage.activity.id === pointage.activity.id && x.pointage.weekNumber === pointage.weekNumber
+      && x.pointage.year === pointage.year ));
+    if ( sem.existe ) {
+      this.servicePointage.saveWeek(pointage);
+    }else {
+      pointage.id = 0;
+      this.servicePointage.postWeek(pointage);
+    }
   }
 }
