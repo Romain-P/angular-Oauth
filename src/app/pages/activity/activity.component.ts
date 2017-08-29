@@ -1,16 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
-import {ActivitiesService} from '../../services/activities/activities.service';
+import {ActivityService} from '../../services/activity/activity.service';
 import {Activity} from '../../models/activity';
-import {ActivitiesManagerComponent} from "./activitiesManager.component";
+import {ActivityManagerComponent} from "./activityManager.component";
 import {User} from "../../models/user";
 
 @Component({
-  selector: 'activities',
-  templateUrl: './activities.component.html',
-  styleUrls: ['./activities.component.scss'],
+  selector: 'activity',
+  templateUrl: './activity.component.html',
+  styleUrls: ['./activity.component.scss'],
 })
-export class ActivitiesComponent implements OnInit {
+export class ActivityComponent implements OnInit {
   private source: LocalDataSource;
   private settings: Object;
 
@@ -19,9 +19,9 @@ export class ActivitiesComponent implements OnInit {
   @Input()
   private title: string;
   @Input()
-  private manager: ActivitiesManagerComponent;
+  private manager: ActivityManagerComponent;
 
-  constructor(private service: ActivitiesService) {
+  constructor(private service: ActivityService) {
     this.source = new LocalDataSource();
   }
 
@@ -124,7 +124,7 @@ export class ActivitiesComponent implements OnInit {
   }
 
   private loadData(): void {
-    let future = !this.parent ? this.service.getActivitiesParent() : this.service.getParents(this.parent.id);
+    let future = !this.parent ? this.service.getActivitiesParent() : this.service.getChildren(this.parent.id);
 
     future.then((activities) => {
       this.settings = this.loadTableSettings();
@@ -162,7 +162,6 @@ export class ActivitiesComponent implements OnInit {
         activity.id = x.id;
         this.loadData()
       });
-
   }
 
   public onEditConfirm(event): void {

@@ -4,19 +4,12 @@ import {Activity} from '../../models/activity';
 import {HttpService} from '../http/http.service';
 
 @Injectable()
-export class ActivitiesService {
+export class ActivityService {
   private activitiesUrl = `http://10.64.0.41:8080/gta/activity`;
   private activitiesParents = 'http://10.64.0.41:8080/gta/activity/parents';
+  private childrenActivities = 'http://10.64.0.41:8080/gta/activity/children';
 
   constructor(private http: HttpService) {}
-
-  getActivities(): Promise<Activity[]> {
-    return this.http.get(this.activitiesUrl)
-      .toPromise()
-      .then(response => {
-        return response.json() as Activity[];
-      }).catch(this.handleError);
-  }
 
   getActivitiesParent(): Promise<Activity[]> {
     return this.http.get(this.activitiesParents)
@@ -26,8 +19,8 @@ export class ActivitiesService {
       }).catch(this.handleError);
   }
 
-  getParents(id: number): Promise<Activity[]> {
-    return this.http.get(this.activitiesParents + '/' + id)
+  getChildren(id: number): Promise<Activity[]> {
+    return this.http.get(this.childrenActivities + '/' + id)
       .toPromise()
       .then(response => {
         return response.json() as Activity[];

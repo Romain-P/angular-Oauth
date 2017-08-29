@@ -4,11 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ActivitiesUserComponent } from './pages/activitiesUser/activitiesUser';
-import { UserService } from './services/activitiesUser/user.service';
-import { ActivitiesComponent } from './pages/activities/activities.component';
-import { ActivitiesService } from './services/activities/activities.service';
-import { PointageComponent } from './pages/pointage/pointage';
+import { ActivityAssignmentComponent } from './pages/assignment/assignment.component';
+import { UserService } from './services/user/user.service';
+import { ActivityComponent } from './pages/activity/activity.component';
+import { ActivityService } from './services/activity/activity.service';
+import { PointageComponent } from './pages/pointage/pointage.component';
 import { PointageService } from './services/pointage/pointage.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 /*
@@ -25,8 +25,8 @@ import { PagesModule } from './pages/pages.module';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { AuthenticationGuard, LoggedGuard } from './services/authentication/gard.service';
 import { HttpService } from './services/http/http.service';
-import { ActivitiesManagerComponent} from './pages/activities/activitiesManager.component';
-import { PointageManagerComponent } from './pages/pointage/pointageManager';
+import { ActivityManagerComponent} from './pages/activity/activityManager.component';
+import { PointageManagerComponent } from './pages/pointage/pointageManager.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -36,7 +36,7 @@ const APP_PROVIDERS = [
   AuthenticationGuard,
   LoggedGuard,
   HttpService,
-  ActivitiesService,
+  ActivityService,
   UserService,
   PointageService,
 ];
@@ -54,9 +54,9 @@ export type StoreType = {
   bootstrap: [App],
   declarations: [
     App,
-    ActivitiesComponent,
-    ActivitiesUserComponent,
-    ActivitiesManagerComponent,
+    ActivityComponent,
+    ActivityAssignmentComponent,
+    ActivityManagerComponent,
     PointageComponent,
     PointageManagerComponent,
   ],

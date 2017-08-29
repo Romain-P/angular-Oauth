@@ -1,11 +1,11 @@
 import { Routes, RouterModule }  from '@angular/router';
 import { Pages } from './pages.component';
 import { ModuleWithProviders } from '@angular/core';
-import { ActivitiesComponent } from './activities/activities.component';
-import { ActivitiesUserComponent } from './activitiesUser/activitiesUser';
-import { PointageManagerComponent } from './pointage/pointageManager';
+import { ActivityComponent } from './activity/activity.component';
+import { ActivityAssignmentComponent } from './assignment/assignment.component';
+import { PointageManagerComponent } from './pointage/pointageManager.component';
 import { AuthenticationGuard, LoggedGuard } from '../services/authentication/gard.service';
-import { ActivitiesManagerComponent } from './activities/activitiesManager.component';
+import { ActivityManagerComponent } from './activity/activityManager.component';
 
 // noinspection TypeScriptValidateTypes
 
@@ -25,8 +25,8 @@ export const routes: Routes = [
       children: [
         { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
         { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
-        { path: 'activities', component: ActivitiesManagerComponent },
-        { path: 'activitiesUser', component: ActivitiesUserComponent },
+        { path: 'activity', component: ActivityManagerComponent },
+        { path: 'assignment', component: ActivityAssignmentComponent },
         { path: 'pointage', component: PointageManagerComponent },
       ],
     },

@@ -5,10 +5,10 @@
            </div>
            <div class="card-body">
                    <select class="list-act form-control "  [(ngModel)]="semaienSelectionnee"  >
-                           <option *ngFor="let semaine of listSemaine" 
+                           <option *ngFor="let semaine of listSemaine"
                            [ngValue]="semaine.id">{{semaine.titre}}</option>
                         </select>
-           </div>    
+           </div>
        </div>
        <div bacardblur="" zoom-in="" class="animated fadeIn card with-scroll col-lg-2">
         <div class="card-header clearfix">
@@ -16,17 +16,16 @@
         </div>
         <div class="card-body">
                 <select class="list-act form-control "  [(ngModel)]="anneSelectionne"  >
-                        <option *ngFor="let annee of listAnnee" 
+                        <option *ngFor="let annee of listAnnee"
                         [ngValue]="annee.id">{{annee.titre}}</option>
                      </select>
-        </div>    
+        </div>
     </div>
        </div>
 <div class="widgets">
-    <SaisiePointage *ngFor="let table of tables"
+    <pointage *ngFor="let table of tables"
                 [manager]="manager"
                 [parent]="table.parent"
                 [title]="table.title">
-    </SaisiePointage>
+    </pointage>
   </div>
-  
