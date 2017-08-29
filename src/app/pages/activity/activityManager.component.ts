@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { ActivitiesService } from '../../services/activities/activities.service';
+import { ActivityService } from '../../services/activity/activity.service';
 import { Activity } from '../../models/activity';
 
 @Component({
-  selector: 'activitiesManager',
-  templateUrl: './activitiesManager.component.html',
-  styleUrls: ['./activitiesManager.component.scss'],
+  selector: 'activityManager',
+  templateUrl: './activityManager.component.html',
+  styleUrls: ['./activityManager.component.scss'],
 })
-export class ActivitiesManagerComponent implements OnInit {
+export class ActivityManagerComponent implements OnInit {
   private tables: Table[];
-  private manager: ActivitiesManagerComponent;
+  private manager: ActivityManagerComponent;
 
   constructor() {
     this.tables = [];

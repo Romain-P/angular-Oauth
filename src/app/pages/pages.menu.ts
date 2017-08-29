@@ -15,7 +15,7 @@ export const PAGES_MENU = [
         }
       },
       {
-        path: 'activities',
+        path: 'activity',
         data: {
           menu: {
             title: 'general.menu.activities',
@@ -25,20 +25,20 @@ export const PAGES_MENU = [
             order: 100,
           },
         },
-        
+
       },
       {
-        path: 'activitiesUser',
+        path: 'assignment',
         data: {
           menu: {
-            title: 'general.menu.activitiesUser',
+            title: 'general.menu.assignment',
             icon: 'ion-bag',
             selected: false,
             expanded: false,
             order: 100,
           },
         },
-        
+
       },
       {
         path: 'pointage',
@@ -51,7 +51,7 @@ export const PAGES_MENU = [
             order: 100,
           },
         },
-        
+
       },
     ],
   },

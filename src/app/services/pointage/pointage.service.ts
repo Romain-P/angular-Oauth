@@ -9,7 +9,9 @@ import { HttpService } from '../http/http.service';
 @Injectable()
 export class PointageService {
   private pointageUrl = `http://10.64.0.41:8080/gta/week/user`;
+
   constructor(private http: HttpService, private auth: AuthenticationService) {}
+
   getWeeks(): Promise<Pointage[]> {
     return this.http.get(this.pointageUrl)
       .toPromise()
@@ -60,7 +62,7 @@ export class PointageService {
   private formatActivity(activity: Activity): void {
     if (activity.subActivities !== null && activity.subActivities.length <= 0) {
       activity.subActivities = null;
-    }else if (activity.subActivities !== null) { 
+    }else if (activity.subActivities !== null) {
       activity.subActivities.forEach(x => this.formatActivity(x));
     }
   }
@@ -69,5 +71,5 @@ export class PointageService {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);
   }
- 
+
 }
