@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {Activity} from '../../models/activity';
+import { Component, OnInit } from '@angular/core';
+import { Activity } from '../../models/activity';
 
 @Component({
   selector: 'pointageManager',
@@ -10,31 +10,34 @@ export class PointageManagerComponent implements OnInit {
   private tables: Table[];
   private manager: PointageManagerComponent;
    selected: string;
-   weekselected: number;
-   yearselected: number;
+   semaienSelectionnee: ListElementComponent;
+   anneSelectionne: ListElementComponent = new ListElementComponent();
   constructor() {
     this.tables = [];
     this.manager = this;
-    this.selected = "";
+    this.selected = '';
   }
 
   listAnnee: ListElementComponent[] = [];
   listSemaine: ListElementComponent[] = [];
 
+ 
   public ngOnInit() {
+    this.anneSelectionne.id = 2017;
+    this.anneSelectionne.titre = '2017';
     // setting select data
     this.listAnnee.push(new ListElementComponent(0, `----Année----`));
     for (let i = 2017; i < 2018; i++) {
       this.listAnnee.push(new ListElementComponent(i, `${i}`));
+      this.anneSelectionne = new ListElementComponent(i, `${i}`);
     }
 
     this.listSemaine.push(new ListElementComponent(0, `----Semaine----`));
     for (let i = 1; i < 53; i++) {
       this.listSemaine.push(new ListElementComponent(i, `${i}-semaine du  ${this.getDate(i, 2017)}`));
     }
-    this.selected = ""; //TODO
-    this.yearselected = 2017;
-    this.weekselected = 52;
+    this.selected = ''; //TODO
+ 
     this.tables.push(new Table('/', null));
   }
 
@@ -57,7 +60,7 @@ export class PointageManagerComponent implements OnInit {
   }
 
   private formatNumber(number: number): string {
-    return number < 10 ? "0" + number : number.toString();
+    return number < 10 ? '0' + number : number.toString();
   }
 
   public childrenRequested(activity: Activity): void {
@@ -89,7 +92,7 @@ export class Table {
 export class ListElementComponent {
   id: number;
   titre: string;
-  constructor( id: number , titre: string) {
+  constructor( id?: number , titre?: string) {
     this.id = id;
     this.titre = titre;
   }

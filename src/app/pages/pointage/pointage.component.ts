@@ -96,8 +96,8 @@ export class PointageComponent implements OnInit {
 
   public loadTableSettings() {
     return {
-      mode: external,
-
+      mode: 'inline',
+      hideSubHeader: true,
       actions: {
         add: false,
         delete: false,
