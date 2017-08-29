@@ -15,7 +15,9 @@ import { Activity } from '../../models/activity';
 import { Week } from '../../models/week';
 import { Pointage } from '../../models/pointage';
 
-import { CustomEditorComponent } from './custom-render.component';
+import { CustomRenderComponent } from './custom-render.component';
+import { CustomEditorComponent } from './custom-editor.component';
+
 @Component({
     selector: 'SaisiePointage',
     templateUrl: './pointage.html',
@@ -30,7 +32,7 @@ export class PointageComponent implements OnInit {
   private manager: PointageManagerComponent;
  
     semaienSelectionnee: object;
-  listAct: Activity[]=[];
+
     user: User;
     anneSelectionne: object;
     iduser: number = 0;
@@ -52,13 +54,7 @@ export class PointageComponent implements OnInit {
         // setting table datasource
         this.iduser = +localStorage.getItem('userId') || 0;
   
-        this.serviceUser.getUser(this.iduser).then((c) => {
-          this.user = c as User;
-          this.listAct = this.user.activities;
-          this.settings = this.loadTableSettings();
-        },
-        );
-        
+        this.settings = this.loadTableSettings();
         this.loadData(28, 2017);
         // this.source.load(activities);
         // getWeekNumber
@@ -75,7 +71,7 @@ export class PointageComponent implements OnInit {
     this.serviceUser.getUser(this.iduser).then((c) => {
       this.user = c as User;
       const activities = this.parent ? this.parent.subActivities : this.user.activities;
-      this.listAct = this.user.activities;
+    
       this.servicePointage.getWeekNumber(nbr, year).then(
             weeks => {  
             activities.forEach( activitie => {
@@ -129,8 +125,11 @@ export class PointageComponent implements OnInit {
                   const activity = value as Activity;
                   return activity ? activity.name : '';
                 },
-                
-          },
+                /*editor: {
+                  type: 'custom',
+                  renderComponent: CustomEditorComponent,
+                },*/
+            },
                monday: { filter: false, title: 'Lundi', type: 'string' },
                tuesday: { filter: false, title: 'Mardi', type: 'string' },
                wednesday: { filter: false, title: 'Mercredi', type: 'string' },
@@ -142,18 +141,19 @@ export class PointageComponent implements OnInit {
             },
         };
       }
-
-
-      public onCreateConfirm(event): void {
-        const activity = event.newData as Activity;
-       
-    
-      }
-    
+   
       public onEditConfirm(event): void {
-        console.log(event);
-        const activity = event.newData as Activity;
     
-      }
+        let pointage = event.newData as Pointage;
+        let sem = this.listWeeks.find( x => x.pointage.id === pointage.id 
+          || (x.pointage.activity.id === pointage.activity.id && x.pointage.weekNumber === pointage.weekNumber
+          && x.pointage.year === pointage.year ));
+        if ( sem.existe ) {
+          this.servicePointage.saveWeek(pointage);
+        }else {
+          this.servicePointage.postWeek(pointage);
+        }
+
+     }
   
 }

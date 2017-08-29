@@ -11,9 +11,7 @@
               <ba-card cardTitle="" baCardClass="with-scroll" class="smart-table-container">
                 <ng2-smart-table  [settings]="settings" [source]="source"
                 (userRowSelect)="rowSelected($event)"
-                (deleteConfirm)="onDeleteConfirm($event)"
-                (editConfirm)="onEditConfirm($event)"
-                (createConfirm)="onCreateConfirm($event)">
+                (editConfirm)="onEditConfirm($event)">
                 </ng2-smart-table>
               </ba-card>
             </div>
