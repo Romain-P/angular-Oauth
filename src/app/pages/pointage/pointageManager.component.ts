@@ -29,7 +29,7 @@ export class PointageManagerComponent implements OnInit {
 
     this.listSemaine.push(new ListElementComponent(0, `----Semaine----`));
     for (let i = 1; i < 53; i++) {
-      this.listSemaine.push(new ListElementComponent(i, `semaine du  ${this.getDate(i, 2017)}`));
+      this.listSemaine.push(new ListElementComponent(i, `${i}-semaine du  ${this.getDate(i, 2017)}`));
     }
     this.selected = ""; //TODO
     this.tables.push(new Table('/', null));

@@ -8,12 +8,8 @@ import { HttpService } from '../http/http.service';
 
 @Injectable()
 export class PointageService {
-<<<<<<< HEAD
   private pointageUrl = `http://10.64.0.41:8080/gta/week`;
-=======
-  private pointageUrl = `http://10.64.0.41:8080/gta/week/user`;
 
->>>>>>> 07b787897ab5170367c493c84e7951be2ed0cbc9
   constructor(private http: HttpService, private auth: AuthenticationService) {}
 
   getWeeks(): Promise<Pointage[]> {
