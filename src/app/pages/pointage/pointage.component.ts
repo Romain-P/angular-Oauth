@@ -1,16 +1,17 @@
-import {Component, Input, OnInit, OnChanges, SimpleChange } from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
+import { Component, Input, OnInit, OnChanges, SimpleChange } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
 
 
-import {ActivityService} from '../../services/activity/activity.service';
-import {UserService} from '../../services/user/user.service';
-import {PointageService} from '../../services/pointage/pointage.service';
-import {PointageManagerComponent} from './pointageManager.component';
+import { ActivityService } from '../../services/activity/activity.service';
+import { UserService } from '../../services/user/user.service';
+import { PointageService } from '../../services/pointage/pointage.service';
+import { PointageManagerComponent } from './pointageManager.component';
 
-import {User} from '../../models/user';
-import {Activity} from '../../models/activity';
-import {Week} from '../../models/week';
-import {Pointage} from '../../models/pointage';
+import { User } from '../../models/user';
+import { Activity } from '../../models/activity';
+import { Week } from '../../models/week';
+import { Pointage } from '../../models/pointage';
+import { CustomEditorComponent } from './custom-editor.component';
 
 @Component({
   selector: 'pointage',
@@ -50,7 +51,7 @@ export class PointageComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
-    for (let propName in changes) {
+    for (const propName in changes) {
       if ( propName === 'semaineSelectionnee' || propName === 'anneSelectionne' ) {
         this.loadData(+this.semaineSelectionnee, +this.anneSelectionne);
       }
@@ -80,9 +81,13 @@ export class PointageComponent implements OnInit, OnChanges {
   }
 
   private loadData(nbr: number, year: number): void {
+ 
     this.listWeeks = [];
     this.listPointages = [];
-    this.serviceUser.getUser(this.iduser).then((c) => {
+    this.source.reset(true);
+    this.source.load(this.listPointages);
+       if ( nbr > 0 && year > 0) {
+         this.serviceUser.getUser(this.iduser).then((c) => {
       this.user = c as User;
       const activities = this.parent ? this.parent.subActivities : this.user.activities;
       this.listAct = this.user.activities;
@@ -98,6 +103,7 @@ export class PointageComponent implements OnInit, OnChanges {
               week.pointage.user = this.user;
               week.pointage.weekNumber = nbr;
               week.pointage.year = year;
+              
 
             } else {
               week.pointage = pointage;
@@ -112,6 +118,7 @@ export class PointageComponent implements OnInit, OnChanges {
         });
     });
   }
+}
 
   public loadTableSettings() {
     return {
@@ -126,6 +133,7 @@ export class PointageComponent implements OnInit, OnChanges {
         saveButtonContent: '<i class="ion-checkmark"></i>',
         cancelButtonContent: '<i class="ion-close"></i>',
         confirmSave: true,
+        
       },
 
       columns: {
@@ -137,15 +145,18 @@ export class PointageComponent implements OnInit, OnChanges {
             const activity = value as Activity;
             return activity ? activity.name : '';
           },
-
+          editor: {
+            type: 'custom',
+            component: CustomEditorComponent,
+          },
         },
-        monday: {filter: false, title: 'Lundi', type: 'string'},
-        tuesday: {filter: false, title: 'Mardi', type: 'string'},
-        wednesday: {filter: false, title: 'Mercredi', type: 'string'},
-        thursday: {filter: false, title: 'Jeudi', type: 'string'},
-        friday: {filter: false, title: 'Vendredi', type: 'string'},
-        saturday: {filter: false, title: 'Samedi', type: 'string'},
-        sunday: {filter: false, title: 'Dimanche', type: 'string'},
+        monday: { filter: false, title: 'Lundi', type: 'text' },
+        tuesday: { filter: false, title: 'Mardi', type: 'text' },
+        wednesday: { filter: false, title: 'Mercredi', type: 'text' },
+        thursday: { filter: false, title: 'Jeudi', type: 'text' },
+        friday: { filter: false, title: 'Vendredi', type: 'text' },
+        saturday: { filter: false, title: 'Samedi', type: 'text' },
+        sunday: { filter: false, title: 'Dimanche', type: 'text' },
 
 
       },
@@ -160,15 +171,19 @@ export class PointageComponent implements OnInit, OnChanges {
   }
 
   public onEditConfirm(event): void {
-    let pointage = event.newData as Pointage;
-    let sem = this.listWeeks.find( x => x.pointage.id === pointage.id 
+    const pointage = event.newData as Pointage;
+    const sem = this.listWeeks.find( x => x.pointage.id === pointage.id 
       || (x.pointage.activity.id === pointage.activity.id && x.pointage.weekNumber === pointage.weekNumber
       && x.pointage.year === pointage.year ));
     if ( sem.existe ) {
-      this.servicePointage.saveWeek(pointage);
+      this.servicePointage.saveWeek(pointage).then(
+        event.confirm.resolve(event.newData),
+      );
     }else {
       pointage.id = 0;
-      this.servicePointage.postWeek(pointage);
+      this.servicePointage.postWeek(pointage).then(
+        event.confirm.resolve(event.newData),
+      );
     }
   }
 }

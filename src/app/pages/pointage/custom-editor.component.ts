@@ -5,7 +5,7 @@ import { ViewCell } from 'ng2-smart-table';
 
 @Component({
   template: `
-   <button> {{renderValue}}</button>
+   {{renderValue}}
   `,
 })
 export class CustomEditorComponent implements ViewCell, OnInit {

@@ -27,7 +27,7 @@ import { AuthenticationGuard, LoggedGuard } from './services/authentication/gard
 import { HttpService } from './services/http/http.service';
 import { ActivityManagerComponent} from './pages/activity/activityManager.component';
 import { PointageManagerComponent } from './pages/pointage/pointageManager.component';
-
+import { CustomEditorComponent } from './pages/pointage/custom-editor.component';
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
@@ -59,6 +59,7 @@ export type StoreType = {
     ActivityManagerComponent,
     PointageComponent,
     PointageManagerComponent,
+    CustomEditorComponent,
   ],
   imports: [ // import Angular's modules
     BrowserModule,
