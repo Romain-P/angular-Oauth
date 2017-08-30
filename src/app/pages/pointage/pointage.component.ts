@@ -30,7 +30,7 @@ export class PointageComponent implements OnInit, OnChanges {
 
   @Input()
   anneSelectionne: number ;
-  
+
   @Input()
   private title: string;
   
@@ -50,8 +50,12 @@ export class PointageComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
-
-    this.loadData(+this.semaineSelectionnee, +this.anneSelectionne);
+    for (let propName in changes) {
+      if ( propName === 'semaineSelectionnee' || propName === 'anneSelectionne' ) {
+        this.loadData(+this.semaineSelectionnee, +this.anneSelectionne);
+      }
+    }
+    
  
   }
   ngOnInit() {
