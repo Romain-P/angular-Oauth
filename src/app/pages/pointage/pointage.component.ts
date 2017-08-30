@@ -147,6 +147,7 @@ export class PointageComponent implements OnInit, OnChanges {
         saturday: {filter: false, title: 'Samedi', type: 'string'},
         sunday: {filter: false, title: 'Dimanche', type: 'string'},
 
+
       },
     };
   }
