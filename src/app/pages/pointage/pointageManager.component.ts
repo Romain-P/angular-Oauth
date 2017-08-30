@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Activity } from '../../models/activity';
+import * as moment from 'moment';
 
 @Component({
   selector: 'pointageManager',
@@ -21,46 +22,26 @@ export class PointageManagerComponent implements OnInit {
   listAnnee: ListElementComponent[] = [];
   listSemaine: ListElementComponent[] = [];
 
- 
+
   public ngOnInit() {
     // setting select data
     this.listAnnee.push(new ListElementComponent(0, `----Année----`));
     for (let i = 2017; i < 2018; i++) {
       this.listAnnee.push(new ListElementComponent(i, `${i}`));
-   
+
     }
- 
+
     this.listSemaine.push(new ListElementComponent(0, `----Semaine----`));
     for (let i = 1; i < 53; i++) {
-      this.listSemaine.push(new ListElementComponent(i, `${i}-semaine du  ${this.getDate(i, 2017)}`));
+      this.listSemaine.push(new ListElementComponent(i, `${i}-semaine du  ${moment('2017').add(i, 'week').startOf('isoWeek').format('DD/MM')}`));
     }
     this.selected = ''; //TODO
-    this.semaineSelectionnee = 28;
-     this.anneSelectionne = 2017;
+
+    let current = moment().startOf('isoWeek');
+    this.semaineSelectionnee = current.week();
+    this.anneSelectionne = current.year();
 
     this.tables.push(new Table('/', null));
-  }
-
-  private getDate(w, y): string {
-    const simple = new Date(y, 0, 1 + (w - 1) * 7);
-    const dow = simple.getDay();
-    const ISOWeek = simple;
-
-    if (dow <= 4)
-      ISOWeek.setDate(simple.getDate() - simple.getDay() + 1);
-    else
-      ISOWeek.setDate(simple.getDate() + 8 - simple.getDay());
-    return this.formatDate(ISOWeek);
-  }
-
-  private formatDate(date: Date): string {
-
-    return this.formatNumber(date.getDate()) + '/' +
-      this.formatNumber(date.getMonth() + 1);
-  }
-
-  private formatNumber(number: number): string {
-    return number < 10 ? '0' + number : number.toString();
   }
 
   public childrenRequested(activity: Activity): void {
@@ -77,7 +58,7 @@ export class PointageManagerComponent implements OnInit {
       this.tables.push(new Table(path, activity));
     }
   }
-  
+
 }
 
 export class Table {
