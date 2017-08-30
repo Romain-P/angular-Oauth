@@ -2,12 +2,11 @@
 <div class="animated fadeIn card with-scroll">
 <div class="table-responsive card-body">
         <div class="card-header clearfix">
-                <h3 class="card-title" translate="">Saisissez vos pointages</h3>
+                <h3 class="card-title" translate="">{{title}}</h3>
          </div>  
          <br>  
          <div class="widgets">
             <div class="row">
-              <h3>{{title}}</h3>
               <ba-card cardTitle="" baCardClass="with-scroll" class="smart-table-container">
                 <ng2-smart-table  [settings]="settings" [source]="source"
                 (userRowSelect)="rowSelected($event)"

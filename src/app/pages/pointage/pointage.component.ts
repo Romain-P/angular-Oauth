@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, SimpleChange } from '@angular/core';
 import {LocalDataSource} from 'ng2-smart-table';
 
 
@@ -18,17 +18,25 @@ import {Pointage} from '../../models/pointage';
   styleUrls: ['./pointage.component.scss'],
 })
 
-export class PointageComponent implements OnInit {
+export class PointageComponent implements OnInit, OnChanges {
   @Input()
   private parent: Activity;
 
   @Input()
   private manager: PointageManagerComponent;
 
-  semaienSelectionnee: object;
+  @Input()
+  semaineSelectionnee: number;
+
+  @Input()
+  anneSelectionne: number ;
+  
+  @Input()
+  private title: string;
+  
+
   listAct: Activity[] = [];
   user: User;
-  anneSelectionne: object;
   iduser: number = 0;
   private source: LocalDataSource;
   listWeeks: Week[] = [];
@@ -41,7 +49,11 @@ export class PointageComponent implements OnInit {
     this.source = new LocalDataSource();
   }
 
+  ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
 
+    this.loadData(+this.semaineSelectionnee, +this.anneSelectionne);
+ 
+  }
   ngOnInit() {
     // setting table datasource
     this.iduser = +localStorage.getItem('userId') || 0;
@@ -53,7 +65,7 @@ export class PointageComponent implements OnInit {
       },
     );
 
-    this.loadData(28, 2017);
+    this.loadData(this.semaineSelectionnee, this.anneSelectionne);
     // this.source.load(activity);
     // getWeekNumber
   }
@@ -64,6 +76,8 @@ export class PointageComponent implements OnInit {
   }
 
   private loadData(nbr: number, year: number): void {
+    this.listWeeks = [];
+    this.listPointages = [];
     this.serviceUser.getUser(this.iduser).then((c) => {
       this.user = c as User;
       const activities = this.parent ? this.parent.subActivities : this.user.activities;
@@ -89,6 +103,7 @@ export class PointageComponent implements OnInit {
             this.listPointages.push(week.pointage);
 
           });
+          this.source.reset(true);
           this.source.load(this.listPointages);
         });
     });
@@ -96,7 +111,6 @@ export class PointageComponent implements OnInit {
 
   public loadTableSettings() {
     return {
-      mode: 'inline',
       hideSubHeader: true,
       actions: {
         add: false,
@@ -151,5 +165,13 @@ export class PointageComponent implements OnInit {
       pointage.id = 0;
       this.servicePointage.postWeek(pointage);
     }
+  }
+}
+export class ListElementComponent {
+  id: number;
+  titre: string;
+  constructor( id?: number , titre?: string) {
+    this.id = id;
+    this.titre = titre;
   }
 }

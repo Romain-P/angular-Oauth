@@ -4,7 +4,7 @@
                <h3 class="card-title" translate="">Semaine</h3>
            </div>
            <div class="card-body">
-                   <select class="list-act form-control "  [(ngModel)]="semaienSelectionnee"  >
+                   <select class="list-act form-control "  [(ngModel)]="semaineSelectionnee" (change)="onSelectChange()" >
                            <option *ngFor="let semaine of listSemaine"
                            [ngValue]="semaine.id"  >{{semaine.titre}}</option>
                         </select>
@@ -15,10 +15,10 @@
             <h3 class="card-title" translate="">Année</h3>
         </div>
         <div class="card-body">
-                <select class="list-act form-control "  [(ngModel)]="anneSelectionne"  >
-                        <option *ngFor="let annee of listAnnee"
+                <select class="list-act form-control "  [(ngModel)]="anneSelectionne" (change)="onSelectChange()" >
+                        <option *ngFor="let annee of listAnnee" [selected]="annee.titre == '2017'"
                         [ngValue]="annee.id">{{annee.titre}}</option>
-                     </select>
+                </select>
         </div>
     </div>
        </div>
@@ -26,6 +26,8 @@
     <pointage *ngFor="let table of tables"
                 [manager]="manager"
                 [parent]="table.parent"
-                [title]="table.title">
+                [title]="table.title"
+                [semaineSelectionnee]="semaineSelectionnee"
+                [anneSelectionne]="anneSelectionne">
     </pointage>
   </div>

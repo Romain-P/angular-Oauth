@@ -10,8 +10,8 @@ export class PointageManagerComponent implements OnInit {
   private tables: Table[];
   private manager: PointageManagerComponent;
    selected: string;
-   semaienSelectionnee: ListElementComponent;
-   anneSelectionne: ListElementComponent = new ListElementComponent();
+   semaineSelectionnee: number ;
+   anneSelectionne: number;
   constructor() {
     this.tables = [];
     this.manager = this;
@@ -23,21 +23,21 @@ export class PointageManagerComponent implements OnInit {
 
  
   public ngOnInit() {
-    this.anneSelectionne.id = 2017;
-    this.anneSelectionne.titre = '2017';
     // setting select data
     this.listAnnee.push(new ListElementComponent(0, `----Année----`));
     for (let i = 2017; i < 2018; i++) {
       this.listAnnee.push(new ListElementComponent(i, `${i}`));
-      this.anneSelectionne = new ListElementComponent(i, `${i}`);
+   
     }
-
+ 
     this.listSemaine.push(new ListElementComponent(0, `----Semaine----`));
     for (let i = 1; i < 53; i++) {
       this.listSemaine.push(new ListElementComponent(i, `${i}-semaine du  ${this.getDate(i, 2017)}`));
     }
     this.selected = ''; //TODO
- 
+    this.semaineSelectionnee = 28;
+     this.anneSelectionne = 2017;
+
     this.tables.push(new Table('/', null));
   }
 
@@ -77,6 +77,7 @@ export class PointageManagerComponent implements OnInit {
       this.tables.push(new Table(path, activity));
     }
   }
+  
 }
 
 export class Table {
