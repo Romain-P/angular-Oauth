@@ -12,6 +12,8 @@ import { Activity } from '../../models/activity';
 import { Week } from '../../models/week';
 import { Pointage } from '../../models/pointage';
 import { CustomEditorComponent } from './custom-editor.component';
+import { CustomWeekEditorComponent } from './week-editor.component';
+import { ButtonRenderComponent } from './button-render.component';
 
 @Component({
   selector: 'pointage',
@@ -40,6 +42,7 @@ export class PointageComponent implements OnInit, OnChanges {
   user: User;
   iduser: number = 0;
   private source: LocalDataSource;
+  private sourceTotal: LocalDataSource;
   listWeeks: Week[] = [];
   listPointages: Pointage[] = [];
   private settings: Object;
@@ -56,9 +59,8 @@ export class PointageComponent implements OnInit, OnChanges {
         this.loadData(+this.semaineSelectionnee, +this.anneSelectionne);
       }
     }
-    
- 
-  }
+   }
+
   ngOnInit() {
     // setting table datasource
     this.iduser = +localStorage.getItem('userId') || 0;
@@ -94,7 +96,7 @@ export class PointageComponent implements OnInit, OnChanges {
       this.servicePointage.getWeekNumber(nbr, year).then(
         weeks => {
           activities.forEach(activitie => {
-            const pointage = weeks.find(c => c.activity.id === activitie.id) as Pointage;
+            const pointage = weeks.find( x => x.activity.id === activitie.id) as Pointage;
             const week = new Week();
             if (pointage === undefined) {
               week.existe = false;
@@ -150,6 +152,33 @@ export class PointageComponent implements OnInit, OnChanges {
             component: CustomEditorComponent,
           },
         },
+        monday: { filter: false,
+                  title: 'Lundi', 
+                  type: 'number', 
+                  editor: {
+                    type: 'custom',
+                    component: CustomWeekEditorComponent,
+                  },
+                 },
+        tuesday: { filter: false, title: 'Mardi' },
+        wednesday: { filter: false, title: 'Mercredi' },
+        thursday: { filter: false, title: 'Jeudi' },
+        friday: { filter: false, title: 'Vendredi' },
+        saturday: { filter: false, title: 'Samedi' },
+        sunday: { filter: false, title: 'Dimanche' },
+     },
+    };
+  }
+  public loadTableTotalSettings() {
+    return {
+      hideSubHeader: true,
+      actions: {
+        add: false,
+        delete: false,
+        edit: false,
+      },
+     
+      columns: {
         monday: { filter: false, title: 'Lundi', type: 'text' },
         tuesday: { filter: false, title: 'Mardi', type: 'text' },
         wednesday: { filter: false, title: 'Mercredi', type: 'text' },
@@ -157,12 +186,9 @@ export class PointageComponent implements OnInit, OnChanges {
         friday: { filter: false, title: 'Vendredi', type: 'text' },
         saturday: { filter: false, title: 'Samedi', type: 'text' },
         sunday: { filter: false, title: 'Dimanche', type: 'text' },
-
-
       },
     };
   }
-
 
   public onCreateConfirm(event): void {
     const activity = event.newData as Activity;

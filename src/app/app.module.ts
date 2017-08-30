@@ -28,6 +28,8 @@ import { HttpService } from './services/http/http.service';
 import { ActivityManagerComponent} from './pages/activity/activityManager.component';
 import { PointageManagerComponent } from './pages/pointage/pointageManager.component';
 import { CustomEditorComponent } from './pages/pointage/custom-editor.component';
+import { CustomWeekEditorComponent } from './pages/pointage/week-editor.component';
+import { ButtonRenderComponent } from './pages/pointage/button-render.component';
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
@@ -60,6 +62,13 @@ export type StoreType = {
     PointageComponent,
     PointageManagerComponent,
     CustomEditorComponent,
+    CustomWeekEditorComponent,
+    ButtonRenderComponent,
+  ],
+  entryComponents: [
+    CustomEditorComponent,
+    CustomWeekEditorComponent, 
+    ButtonRenderComponent,
   ],
   imports: [ // import Angular's modules
     BrowserModule,

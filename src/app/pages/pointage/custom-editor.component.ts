@@ -1,22 +1,26 @@
-import { Component, OnInit , Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Cell, DefaultEditor, Editor } from 'ng2-smart-table';
 import { Activity } from '../../models/activity';
-
-import { ViewCell } from 'ng2-smart-table';
-
 @Component({
   template: `
-   {{renderValue}}
+{{renderValue}}
   `,
 })
-export class CustomEditorComponent implements ViewCell, OnInit {
+export class CustomEditorComponent extends DefaultEditor implements AfterViewInit {
 
   renderValue: string;
+  
+  
 
-  @Input() value: string | number;
-  @Input() rowData: any;
-
-  ngOnInit() {
-    this.renderValue = this.value.toString().toUpperCase();
-  }
+    constructor() {
+      super();
+    }
+  
+    ngAfterViewInit() {
+      if (this.cell.newValue !== '') {
+        let act = this.cell.newValue as Activity;
+        this.renderValue = act.name ;
+      }
+    }
 
 }

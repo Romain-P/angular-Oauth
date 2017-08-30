@@ -33,6 +33,7 @@ export class PointageManagerComponent implements OnInit {
 
     this.listSemaine.push(new ListElementComponent(0, `----Semaine----`));
     for (let i = 1; i < 53; i++) {
+      //allez kiss ça marche hehehe, bonne soiree
       this.listSemaine.push(new ListElementComponent(i, `${i}-semaine du  ${moment(`${moment().year()}`).add(i, 'week').startOf('isoWeek').format('DD/MM')}`));
     }
     this.selected = ''; //TODO
