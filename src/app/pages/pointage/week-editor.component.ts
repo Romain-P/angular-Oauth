@@ -2,15 +2,16 @@ import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Cell, DefaultEditor, Editor } from 'ng2-smart-table';
 @Component({
   template: `
-  <input 
-  type="number" min="0"
+  <input  
+  type="number" min="0" max="100" step="5"
   [ngClass]="inputClass"
   #name
-  class="form-control short-input"
+  class="form-control ng-pristine ng-valid ng-touched"
   [name]="cell.getId()"
   [disabled]="!cell.isEditable()"
   [placeholder]="cell.getTitle()"
   (click)="onClick.emit($event)"
+  (keyup)="updateValue()"
   (keydown.enter)="onEdited.emit($event)"
   (keydown.esc)="onStopEditing.emit()">
   `,
@@ -28,9 +29,13 @@ export class CustomWeekEditorComponent extends DefaultEditor implements AfterVie
 
   ngAfterViewInit() {
     if (this.cell.newValue !== '') {
-      // this.name.nativeElement.value = this.cell.newValue;
+      this.name.nativeElement.value = this.cell.newValue;
    
     }
+  }
+  updateValue() {
+    const name = this.name.nativeElement.value;
+    this.cell.newValue = name;
   }
 
 
