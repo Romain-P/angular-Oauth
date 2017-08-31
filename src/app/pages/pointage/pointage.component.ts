@@ -42,15 +42,17 @@ export class PointageComponent implements OnInit, OnChanges {
   user: User;
   iduser: number = 0;
   private source: LocalDataSource;
-  private sourceTotal: LocalDataSource;
+  private sourceDetail: LocalDataSource;
   listWeeks: Week[] = [];
   listPointages: Pointage[] = [];
+  listTotal: Pointage[] = [];
   private settings: Object;
-
+  private settingsDetail: Object;
   constructor(private serviceActivities: ActivityService,
               private serviceUser: UserService,
               private servicePointage: PointageService) {
     this.source = new LocalDataSource();
+    this.sourceDetail = new LocalDataSource();
   }
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
@@ -69,6 +71,7 @@ export class PointageComponent implements OnInit, OnChanges {
         this.user = c as User;
         this.listAct = this.user.activities;
         this.settings = this.loadTableSettings();
+        this.settingsDetail = this.loadTableTotalSettings();
       },
     );
 
@@ -80,10 +83,11 @@ export class PointageComponent implements OnInit, OnChanges {
   private rowSelected(event: any): void {
     const pointage = event.data as Pointage;
     this.manager.childrenRequested(pointage.activity);
+  
   }
 
   private loadData(nbr: number, year: number): void {
- 
+    this.listTotal = [];
     this.listWeeks = [];
     this.listPointages = [];
     this.source.reset(true);
@@ -117,9 +121,67 @@ export class PointageComponent implements OnInit, OnChanges {
           });
           this.source.reset(true);
           this.source.load(this.listPointages);
-        });
+          const weektoadd = new Pointage();
+          weektoadd.monday = 0;
+          weektoadd.tuesday = 0;
+          weektoadd.thursday = 0;
+          weektoadd.wednesday = 0;
+          weektoadd.friday = 0;
+          weektoadd.sunday = 0;
+          weektoadd.saturday = 0;
+          weektoadd.activity = new Activity();
+          weektoadd.activity.name = 'Total des saisies    ';
+          weeks.forEach(
+            wk => {
+              weektoadd.monday = wk.monday + weektoadd.monday ;
+              weektoadd.tuesday = wk.tuesday + weektoadd.tuesday;
+              weektoadd.thursday = wk.thursday + weektoadd.thursday;
+              weektoadd.wednesday = wk.wednesday + weektoadd.wednesday ;
+              weektoadd.friday = wk.friday + weektoadd.friday;
+              weektoadd.sunday = wk.sunday + weektoadd.sunday;
+              weektoadd.saturday = wk.saturday + weektoadd.saturday;
+            });
+            this.listTotal.push(weektoadd);
+            this.sourceDetail.reset(true);
+            this.sourceDetail.load(this.listTotal);
+        },
+      );
     });
   }
+}
+private loadDatatotal(nbr: number, year: number): void {
+  this.listTotal = [];
+  this.sourceDetail.reset(true);
+  this.sourceDetail.load(this.listTotal);
+     if ( nbr > 0 && year > 0) {
+      this.servicePointage.getWeekNumber(nbr, year).then(
+        weeks => {
+          const weektoadd = new Pointage();
+          weektoadd.monday = 0;
+          weektoadd.tuesday = 0;
+          weektoadd.thursday = 0;
+          weektoadd.wednesday = 0;
+          weektoadd.friday = 0;
+          weektoadd.sunday = 0;
+          weektoadd.saturday = 0;
+          weektoadd.activity = new Activity();
+          weektoadd.activity.name = 'Total des saisies    ';
+          weeks.forEach(
+            wk => {
+              weektoadd.monday = wk.monday + weektoadd.monday ;
+              weektoadd.tuesday = wk.tuesday + weektoadd.tuesday;
+              weektoadd.thursday = wk.thursday + weektoadd.thursday;
+              weektoadd.wednesday = wk.wednesday + weektoadd.wednesday ;
+              weektoadd.friday = wk.friday + weektoadd.friday;
+              weektoadd.sunday = wk.sunday + weektoadd.sunday;
+              weektoadd.saturday = wk.saturday + weektoadd.saturday;
+            });
+            this.listTotal.push(weektoadd);
+            this.sourceDetail.reset(true);
+            this.sourceDetail.load(this.listTotal);
+        },
+      );
+}
 }
 
   public loadTableSettings() {
@@ -215,6 +277,15 @@ export class PointageComponent implements OnInit, OnChanges {
       },
      
       columns: {
+        activity: {
+          filter: false,
+          title: 'Les jours   ',
+          editable: false,
+          valuePrepareFunction: (value) => {
+            const activity = value as Activity;
+            return activity ? activity.name : '';
+          },
+        },
         monday: { filter: false, title: 'Lundi', type: 'text' },
         tuesday: { filter: false, title: 'Mardi', type: 'text' },
         wednesday: { filter: false, title: 'Mercredi', type: 'text' },
@@ -239,14 +310,21 @@ export class PointageComponent implements OnInit, OnChanges {
       && x.pointage.year === pointage.year ));
     if ( sem.existe ) {
       this.servicePointage.saveWeek(pointage).then(
-        event.confirm.resolve(event.newData),
+        x => {
+        event.confirm.resolve(event.newData);
+        this.loadData(pointage.weekNumber, pointage.year);
+        }
       );
     }else {
       pointage.id = 0;
       this.servicePointage.postWeek(pointage).then(
-        event.confirm.resolve(event.newData),
-      );
+        x => {
+        event.confirm.resolve(event.newData);
+        this.loadData(pointage.weekNumber, pointage.year);
+     } 
+    );
     }
+
   }
 }
 export class ListElementComponent {
