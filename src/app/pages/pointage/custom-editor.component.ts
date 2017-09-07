@@ -7,20 +7,16 @@ import { Activity } from '../../models/activity';
   `,
 })
 export class CustomEditorComponent extends DefaultEditor implements AfterViewInit {
-
   renderValue: string;
-  
-  
 
     constructor() {
       super();
     }
-  
+
     ngAfterViewInit() {
       if (this.cell.newValue !== '') {
         let act = this.cell.newValue as Activity;
         this.renderValue = act.name ;
       }
     }
-
 }

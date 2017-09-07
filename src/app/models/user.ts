@@ -1,4 +1,5 @@
 import {Activity} from "./activity";
+import {Role} from "./role";
 export class User {
     id: number;
     username: string;
@@ -7,7 +8,7 @@ export class User {
     avatar: any[];
     email: string;
     superior: User;
-    roles: string[];
+    roles: Role[];
     activities: Activity[];
 
     constructor(id?: number) {

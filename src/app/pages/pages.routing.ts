@@ -6,6 +6,7 @@ import { ActivityAssignmentComponent } from './assignment/assignment.component';
 import { PointageManagerComponent } from './pointage/pointageManager.component';
 import { AuthenticationGuard, LoggedGuard } from '../services/authentication/gard.service';
 import { ActivityManagerComponent } from './activity/activityManager.component';
+import {RoleAssignmentComponent} from "./roles/role.component";
 
 // noinspection TypeScriptValidateTypes
 
@@ -28,6 +29,7 @@ export const routes: Routes = [
         { path: 'activity', component: ActivityManagerComponent },
         { path: 'assignment', component: ActivityAssignmentComponent },
         { path: 'pointage', component: PointageManagerComponent },
+        { path: 'role', component: RoleAssignmentComponent },
       ],
     },
   ],

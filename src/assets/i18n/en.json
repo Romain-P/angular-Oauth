@@ -12,6 +12,7 @@
       "option1": "Option 1"
     },
     "menu": {
+      "roles": "Roles",
       "dashboard": "Dashboard",
       "editors": "Editors",
       "ck_editor": "CKEditor",

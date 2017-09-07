@@ -53,6 +53,19 @@ export const PAGES_MENU = [
         },
 
       },
+      {
+        path: 'role',
+        data: {
+          menu: {
+            title: 'general.menu.roles',
+            icon: 'ion-ios-people',
+            selected: false,
+            expanded: false,
+            order: 100,
+          },
+        },
+
+      },
     ],
   },
 ];

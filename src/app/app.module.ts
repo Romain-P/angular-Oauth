@@ -30,6 +30,8 @@ import { PointageManagerComponent } from './pages/pointage/pointageManager.compo
 import { CustomEditorComponent } from './pages/pointage/custom-editor.component';
 import { CustomWeekEditorComponent } from './pages/pointage/week-editor.component';
 import { ButtonRenderComponent } from './pages/pointage/button-render.component';
+import {RoleService} from "./services/role/role.service";
+import {RoleAssignmentComponent} from "./pages/roles/role.component";
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
@@ -41,6 +43,7 @@ const APP_PROVIDERS = [
   ActivityService,
   UserService,
   PointageService,
+  RoleService
 ];
 
 export type StoreType = {
@@ -64,10 +67,11 @@ export type StoreType = {
     CustomEditorComponent,
     CustomWeekEditorComponent,
     ButtonRenderComponent,
+    RoleAssignmentComponent,
   ],
   entryComponents: [
     CustomEditorComponent,
-    CustomWeekEditorComponent, 
+    CustomWeekEditorComponent,
     ButtonRenderComponent,
   ],
   imports: [ // import Angular's modules

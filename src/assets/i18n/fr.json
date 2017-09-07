@@ -46,7 +46,8 @@
       "external_link": "External Link",
       "activities" :"Activités",
       "assignment" :"Affectation",
-      "pointage" : "Pointage"
+      "pointage" : "Pointage",
+      "roles" : "Roles"
     },
     "created_with": "Created with"
   },
