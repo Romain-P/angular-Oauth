@@ -6,7 +6,7 @@ import {Role} from "../../models/role";
 
 @Injectable()
 export class RoleService {
-  private roleUrl = `http://localhost:8080/role`;
+  private roleUrl = `http://10.64.0.41:8080/gta/role`;
   private userRoles: Array<String>;
 
   constructor(private http: HttpService) {
