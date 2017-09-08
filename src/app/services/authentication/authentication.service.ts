@@ -10,7 +10,7 @@ import {isNullOrUndefined} from "util";
 export class AuthenticationService {
   private static readonly api = 'http://localhost:8080';
   private static readonly tokenUrl = AuthenticationService.api + '/login/token';
-  private static readonly userPath = AuthenticationService.api + '/hello';
+  private static readonly userPath = AuthenticationService.api + '/user/current';
   private static readonly clientId = 'clktime-app';
   private static readonly clientSecret = 'ortec-secret';
 
@@ -34,7 +34,11 @@ export class AuthenticationService {
         localStorage.setItem('expiration_date', ((Date.now() / 1000) + json.expires_in));
       })
       .mergeMap(json => this.http.get(AuthenticationService.userPath, {headers: this.getRequestHeader()}))
-      .do(request => localStorage.setItem('userId', request.json().id));
+      .map(response => response.json())
+      .do(json => {
+        localStorage.setItem('userId', json.id);
+        localStorage.setItem('roles', JSON.stringify(json.roles));
+      });
   }
 
   public validToken(): boolean {
@@ -68,5 +72,6 @@ export class AuthenticationService {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration_date');
     localStorage.removeItem('userId');
+    localStorage.removeItem('roles')
   }
 }

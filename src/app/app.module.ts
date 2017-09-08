@@ -32,6 +32,8 @@ import { CustomWeekEditorComponent } from './pages/pointage/week-editor.componen
 import { ButtonRenderComponent } from './pages/pointage/button-render.component';
 import {RoleService} from "./services/role/role.service";
 import {RoleAssignmentComponent} from "./pages/roles/role.component";
+import {RoleGuard} from "./services/role/rolegard.service";
+import {UtilService} from "app/services/util/util.service";
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
@@ -43,7 +45,9 @@ const APP_PROVIDERS = [
   ActivityService,
   UserService,
   PointageService,
-  RoleService
+  RoleService,
+  RoleGuard,
+  UtilService
 ];
 
 export type StoreType = {

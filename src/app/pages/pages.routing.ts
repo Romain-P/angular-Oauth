@@ -7,6 +7,7 @@ import { PointageManagerComponent } from './pointage/pointageManager.component';
 import { AuthenticationGuard, LoggedGuard } from '../services/authentication/gard.service';
 import { ActivityManagerComponent } from './activity/activityManager.component';
 import {RoleAssignmentComponent} from "./roles/role.component";
+import {RoleGuard} from "../services/role/rolegard.service";
 
 // noinspection TypeScriptValidateTypes
 
@@ -26,10 +27,10 @@ export const routes: Routes = [
       children: [
         { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
         { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
-        { path: 'activity', component: ActivityManagerComponent },
-        { path: 'assignment', component: ActivityAssignmentComponent },
+        { path: 'activity', component: ActivityManagerComponent, canActivate: [RoleGuard], data: {roles: ['admin']} },
+        { path: 'assignment', component: ActivityAssignmentComponent, canActivate: [RoleGuard], data: {roles: ['admin', 'manager']} },
         { path: 'pointage', component: PointageManagerComponent },
-        { path: 'role', component: RoleAssignmentComponent },
+        { path: 'role', component: RoleAssignmentComponent, canActivate: [RoleGuard], data: {roles: ['admin']} },
       ],
     },
   ],

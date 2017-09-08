@@ -5,6 +5,7 @@ export const PAGES_MENU = [
       {
         path: 'dashboard',
         data: {
+          roles: [],
           menu: {
             title: 'general.menu.dashboard',
             icon: 'ion-android-home',
@@ -17,6 +18,7 @@ export const PAGES_MENU = [
       {
         path: 'activity',
         data: {
+          roles: ['admin'],
           menu: {
             title: 'general.menu.activities',
             icon: 'ion-edit',
@@ -30,6 +32,7 @@ export const PAGES_MENU = [
       {
         path: 'assignment',
         data: {
+          roles: ['manager', 'admin'],
           menu: {
             title: 'general.menu.assignment',
             icon: 'ion-bag',
@@ -43,6 +46,7 @@ export const PAGES_MENU = [
       {
         path: 'pointage',
         data: {
+          roles: [],
           menu: {
             title: 'general.menu.pointage',
             icon: 'ion-compass',
@@ -56,6 +60,7 @@ export const PAGES_MENU = [
       {
         path: 'role',
         data: {
+          roles: ['admin'],
           menu: {
             title: 'general.menu.roles',
             icon: 'ion-ios-people',

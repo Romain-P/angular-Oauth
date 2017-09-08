@@ -3,6 +3,8 @@ import { Routes } from '@angular/router';
 
 import { BaMenuService } from '../theme';
 import { PAGES_MENU } from './pages.menu';
+import {RoleService} from "../services/role/role.service";
+import {UtilService} from "app/services/util/util.service";
 
 @Component({
   selector: 'pages',
@@ -32,10 +34,22 @@ import { PAGES_MENU } from './pages.menu';
 })
 export class Pages {
 
-  constructor(private _menuService: BaMenuService,) {
+  constructor(private _menuService: BaMenuService, private roleService: RoleService, private util: UtilService) {
   }
 
   ngOnInit() {
-    this._menuService.updateMenuByRoutes(<Routes>PAGES_MENU);
+    let cpy = this.util.cloneObject(PAGES_MENU);
+    let length = cpy[0].children.length;
+
+    for (let i = 0; i < length; i++) {
+      let x = cpy[0].children[i];
+
+      if (!this.roleService.hasAnyRole(x.data.roles)) {
+        cpy[0].children.splice(i--, 1);
+        length--;
+      }
+    }
+
+    this._menuService.updateMenuByRoutes(<Routes>cpy);
   }
 }
