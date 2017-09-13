@@ -7,7 +7,7 @@ import {Activity} from "../../models/activity";
 
 @Injectable()
 export class UserService {
-  private usersUrl = `http://10.64.0.41:8080/gta/user`;
+  private usersUrl = `http://localhost:8080/user`;
 
   constructor(private http: HttpService, private auth: AuthenticationService) {}
 
@@ -20,6 +20,14 @@ export class UserService {
   }
   getUser(id: number): Promise<User> {
     return this.http.get(`${this.usersUrl}/${id}`)
+      .toPromise()
+      .then(response => {
+        return response.json() as User;
+      }).catch(this.handleError);
+  }
+
+  getCurrentUser(): Promise<User> {
+    return this.http.get(`${this.usersUrl}/current`)
       .toPromise()
       .then(response => {
         return response.json() as User;

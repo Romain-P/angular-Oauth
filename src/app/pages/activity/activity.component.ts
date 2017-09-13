@@ -71,7 +71,7 @@ export class ActivityComponent implements OnInit {
             title: 'Modifié par', type: 'string', editable: false,
             valuePrepareFunction: (value) => {
               let user = value as User;
-              return user.name + " " + user.lastname;
+              return user ? user.name + " " + user.lastname : "";
             },
           }
         } :
@@ -96,7 +96,7 @@ export class ActivityComponent implements OnInit {
             editable: false,
             valuePrepareFunction: (value) => {
               let user = value as User;
-              return user.name + " " + user.lastname;
+              return user ? user.name + " " + user.lastname : "";
             },
           }
         }

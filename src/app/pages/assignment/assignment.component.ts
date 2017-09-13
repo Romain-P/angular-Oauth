@@ -42,14 +42,7 @@ export class ActivityAssignmentComponent implements OnInit {
       columns: {
         name: {title: 'Nom', type: 'string'},
         lastname: {title: 'lastname', type: 'string'},
-        email: {title: 'email', type: 'string'},
-        superior: {
-          title: 'Supérieur',
-          valuePrepareFunction: (value) => {
-            const act = value as User;
-            return act ? `${act.name} ${act.lastname}` : '/';
-          },
-        },
+        email: {title: 'email', type: 'string'}
       },
     };
   }
@@ -58,14 +51,12 @@ export class ActivityAssignmentComponent implements OnInit {
     this.users = [];
     this.listActivities = [];
     this.listActivitiesSelect = [];
-    this.service.getUsers().then((users) => {
-      users.forEach(user => {
-        this.users.push(user);
-      });
+    this.service.getCurrentUser().then((user) => {
+      this.users.push(...user.children);
       this.settings = this.loadTableSettings();
 
       this.source.reset(true);
-      this.source.load(users);
+      this.source.load(user.children);
     });
     this.serviceActivities.getActivitiesParent().then((activities) => {
       activities.forEach(activitie => {
@@ -93,7 +84,11 @@ export class ActivityAssignmentComponent implements OnInit {
       }
 
     });
-    this.selectedUser = event.data as User;
+    this.selectedUser = this.users.find(x => {
+      let user = event.data as User;
+      return x.name === user.name && x.lastname === user.lastname;
+    });
+    alert(JSON.stringify(this.selectedUser));
   }
 
   public addActivity(event): void {

@@ -5,10 +5,12 @@ import 'rxjs/add/operator/catch';
 import "rxjs/add/operator/mergeMap";
 import "rxjs/add/operator/do";
 import {isNullOrUndefined} from "util";
+import {User} from "../../models/user";
+import {Role} from "../../models/role";
 
 @Injectable()
 export class AuthenticationService {
-  private static readonly api = 'http://10.64.0.41:8080/gta';
+  private static readonly api = 'http://localhost:8080';
   private static readonly tokenUrl = AuthenticationService.api + '/login/token';
   private static readonly userPath = AuthenticationService.api + '/user/current';
   private static readonly clientId = 'clktime-app';
@@ -34,10 +36,15 @@ export class AuthenticationService {
         localStorage.setItem('expiration_date', ((Date.now() / 1000) + json.expires_in));
       })
       .mergeMap(json => this.http.get(AuthenticationService.userPath, {headers: this.getRequestHeader()}))
-      .map(response => response.json())
-      .do(json => {
-        localStorage.setItem('userId', json.id);
-        localStorage.setItem('roles', JSON.stringify(json.roles));
+      .map(response => (response.json() as User))
+      .do(user => {
+        localStorage.setItem('userId', user.id+'');
+        if (user.children.length > 0) {
+          let role = new Role();
+          role.name = "manager";
+          user.roles.push(role);
+        }
+        localStorage.setItem('roles', JSON.stringify(user.roles));
       });
   }
 

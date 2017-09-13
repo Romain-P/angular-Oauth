@@ -8,6 +8,7 @@ export class User {
     avatar: any[];
     email: string;
     superior: User;
+    children: User[];
     roles: Role[];
     activities: Activity[];
 
