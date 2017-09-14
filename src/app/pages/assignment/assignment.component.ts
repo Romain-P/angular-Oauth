@@ -71,26 +71,29 @@ export class ActivityAssignmentComponent implements OnInit {
     });
   }
 
+  private loadDataSub(user: User): void {
+    this.users.push(...user.children);
+    this.settings = this.loadTableSettings();
+    this.source.reset(true);
+    this.source.load(user.children);
+  }
+
   private loadData(): void {
     this.users = [];
     this.manager.listActivities = [];
     this.manager.listActivitiesSelect = [];
 
-    let id = this.parent ? this.parent.id : +localStorage.getItem('userId');
+    if (!this.parent)
+      this.service.getUser(+localStorage.getItem('userId')).then((user) => {
+        if (!this.parent) {
+          let clone = this.util.cloneObject(user);
+          clone.children = [];
+          user.children.push(clone);
+        }
+        this.loadDataSub(user);
+      });
+    else this.loadDataSub(this.parent);
 
-    this.service.getUser(id).then((user) => {
-
-      if (!this.parent) {
-        let clone = this.util.cloneObject(user);
-        clone.children = [];
-        user.children.push(clone);
-      }
-
-      this.users.push(...user.children);
-      this.settings = this.loadTableSettings();
-      this.source.reset(true);
-      this.source.load(user.children);
-    });
     this.serviceActivities.getActivitiesParent().then((activities) => {
       activities.forEach(activitie => {
         this.manager.listActivities.push(activitie);

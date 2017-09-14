@@ -42,8 +42,16 @@ export class AssignmentManagerComponent implements OnInit {
 
     let path = (index > 0 ? this.tables[index].title : "") + user.name + " / ";
 
-    if (user.children && user.children.length > 0)
-      this.tables.push(new Table(path, user));
+    if (+localStorage.getItem("userId") == user.id) return;
+
+    if (!user.children || user.children.length == 0)
+      this.service.getUser(user.id).then(x => {
+        if (x.children && x.children.length > 0) {
+          user.children = x.children;
+          this.tables.push(new Table(path, x));
+        }
+      });
+    else this.tables.push(new Table(path, user));
   }
 
   public addActivity(event): void {
