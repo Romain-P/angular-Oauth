@@ -7,7 +7,7 @@ import {Activity} from "../../models/activity";
 
 @Injectable()
 export class UserService {
-  private usersUrl = `http://localhost:8080/user`;
+  private usersUrl = `http://10.64.0.41:8080/gta/user`;
 
   constructor(private http: HttpService, private auth: AuthenticationService) {}
 

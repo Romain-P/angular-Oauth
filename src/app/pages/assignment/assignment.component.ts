@@ -1,12 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
+import {Component, Input, OnInit} from '@angular/core';
 import {LocalDataSource, ViewCell} from 'ng2-smart-table';
 import {UserService} from '../../services/user/user.service';
 import {ActivityService} from '../../services/activity/activity.service';
 import {User} from '../../models/user';
-import {Observable} from 'rxjs/Rx';
-import {Router} from '@angular/router';
 import {Activity} from '../../models/activity';
+import {AssignmentManagerComponent} from "./assignmentManager.component";
+import {UtilService} from "../../services/util/util.service";
 
 @Component({
   selector: 'activitiesUser',
@@ -14,21 +13,19 @@ import {Activity} from '../../models/activity';
   styleUrls: ['./assignment.component.scss'],
 })
 export class ActivityAssignmentComponent implements OnInit {
+  @Input()
+  private parent: User;
+  @Input()
+  private title: string;
+  @Input()
+  private manager: AssignmentManagerComponent;
+
   private source: LocalDataSource;
   private users: User[];
-  private listActivities: Activity[];
-  private listActivitiesSelect: Activity[];
-  private userActivities: Activity[];
   private settings: Object;
-  private selectedActivities: Object[];
-  private toDelActivities: Object[];
-  private selectedUser: User;
 
-  constructor(private service: UserService, private serviceActivities: ActivityService) {
+  constructor(private service: UserService, private serviceActivities: ActivityService, private util: UtilService) {
     this.source = new LocalDataSource();
-    this.selectedUser = new User();
-    this.toDelActivities = [];
-    this.selectedActivities = [];
   }
 
   public ngOnInit() {
@@ -47,77 +44,58 @@ export class ActivityAssignmentComponent implements OnInit {
     };
   }
 
+  public onRowSelect(event): void {
+    this.manager.listActivitiesSelect = [];
+    this.manager.listActivities.forEach(activitie => {
+      this.manager.listActivitiesSelect.push(activitie as Activity);
+    });
+    this.manager.userActivities = [];
+    console.log(event);
+
+    const user = event.data as User;
+    this.manager.childrenRequested(user);
+
+    const list = event.data.activities as Activity[];
+    list.forEach(element => {
+      this.manager.userActivities.push(element as Activity);
+      let ind = this.manager.listActivitiesSelect.indexOf(this.manager.listActivitiesSelect
+        .find(c => c.id === element.id));
+      if (ind >= 0) {
+        this.manager.listActivitiesSelect.splice(ind, 1);
+      }
+
+    });
+    this.manager.selectedUser = this.users.find(x => {
+      let user = event.data as User;
+      return x.name === user.name && x.lastname === user.lastname;
+    });
+  }
+
   private loadData(): void {
     this.users = [];
-    this.listActivities = [];
-    this.listActivitiesSelect = [];
-    this.service.getCurrentUser().then((user) => {
+    this.manager.listActivities = [];
+    this.manager.listActivitiesSelect = [];
+
+    let id = this.parent ? this.parent.id : +localStorage.getItem('userId');
+
+    this.service.getUser(id).then((user) => {
+
+      if (!this.parent) {
+        let clone = this.util.cloneObject(user);
+        clone.children = [];
+        user.children.push(clone);
+      }
+
       this.users.push(...user.children);
       this.settings = this.loadTableSettings();
-
       this.source.reset(true);
       this.source.load(user.children);
     });
     this.serviceActivities.getActivitiesParent().then((activities) => {
       activities.forEach(activitie => {
-        this.listActivities.push(activitie);
-        this.listActivitiesSelect.push(activitie);
+        this.manager.listActivities.push(activitie);
+        this.manager.listActivitiesSelect.push(activitie);
       });
     });
-  }
-
-
-  public onRowSelect(event): void {
-    this.listActivitiesSelect = [];
-    this.listActivities.forEach(activitie => {
-      this.listActivitiesSelect.push(activitie as Activity);
-    });
-    this.userActivities = [];
-    console.log(event);
-    const list = event.data.activities as Activity[];
-    list.forEach(element => {
-      this.userActivities.push(element as Activity);
-      let ind = this.listActivitiesSelect.indexOf(this.listActivitiesSelect
-        .find(c => c.id === element.id));
-      if (ind >= 0) {
-        this.listActivitiesSelect.splice(ind, 1);
-      }
-
-    });
-    this.selectedUser = this.users.find(x => {
-      let user = event.data as User;
-      return x.name === user.name && x.lastname === user.lastname;
-    });
-    alert(JSON.stringify(this.selectedUser));
-  }
-
-  public addActivity(event): void {
-    if (this.selectedActivities.length > 0) {
-      this.selectedActivities.forEach(activitieID => {
-        const act = this.listActivitiesSelect.find(c => c.id === activitieID);
-
-        this.listActivitiesSelect.splice(this.listActivitiesSelect.indexOf(act), 1);
-        this.userActivities.push(act);
-
-      });
-
-      this.selectedUser.activities = this.userActivities;
-      this.service.saveUser(this.selectedUser);
-      this.selectedActivities = [];
-    }
-  }
-
-  public delActivity(event): void {
-    if (this.toDelActivities.length > 0) {
-      this.toDelActivities.forEach(activitieID => {
-        const act = this.userActivities.find(c => c.id === activitieID);
-        this.userActivities.splice(this.userActivities.indexOf(act), 1);
-        this.listActivitiesSelect.push(act);
-      });
-      this.selectedUser.activities = this.userActivities;
-      this.service.saveUser(this.selectedUser);
-      this.selectedUser.activities = this.userActivities;
-      this.toDelActivities = [];
-    }
   }
 }

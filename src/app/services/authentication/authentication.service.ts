@@ -10,7 +10,7 @@ import {Role} from "../../models/role";
 
 @Injectable()
 export class AuthenticationService {
-  private static readonly api = 'http://localhost:8080';
+  private static readonly api = 'http://10.64.0.41:8080/gta';
   private static readonly tokenUrl = AuthenticationService.api + '/login/token';
   private static readonly userPath = AuthenticationService.api + '/user/current';
   private static readonly clientId = 'clktime-app';

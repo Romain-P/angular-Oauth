@@ -6,7 +6,7 @@ import {Role} from "../../models/role";
 import {RoleService} from "../../services/role/role.service";
 
 @Component({
-  selector: 'activitiesUser',
+  selector: 'roleAssignment',
   templateUrl: './role.component.html',
   styleUrls: ['./role.component.scss'],
 })

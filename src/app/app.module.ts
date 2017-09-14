@@ -34,6 +34,7 @@ import {RoleService} from "./services/role/role.service";
 import {RoleAssignmentComponent} from "./pages/roles/role.component";
 import {RoleGuard} from "./services/role/rolegard.service";
 import {UtilService} from "app/services/util/util.service";
+import {AssignmentManagerComponent} from "./pages/assignment/assignmentManager.component";
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
@@ -72,6 +73,7 @@ export type StoreType = {
     CustomWeekEditorComponent,
     ButtonRenderComponent,
     RoleAssignmentComponent,
+    AssignmentManagerComponent
   ],
   entryComponents: [
     CustomEditorComponent,
