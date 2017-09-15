@@ -21,7 +21,7 @@ export class AssignmentManagerComponent implements OnInit {
   public userActivities: Activity[];
   public selectedUser: User;
 
-  constructor(private service: UserService) {
+  constructor(private serviceActivities: ActivityService, private service: UserService) {
     this.tables = [];
     this.manager = this;
     this.toDelActivities = [];
@@ -30,6 +30,16 @@ export class AssignmentManagerComponent implements OnInit {
 
   public ngOnInit() {
     this.tables.push(new Table("/", null));
+
+    this.serviceActivities.getActivitiesParent().then((activities) => {
+      this.listActivities = [];
+      this.listActivitiesSelect = [];
+
+      activities.forEach(activitie => {
+        this.listActivities.push(activitie);
+        this.listActivitiesSelect.push(activitie);
+      });
+    });
   }
 
   public childrenRequested(user: User): void {

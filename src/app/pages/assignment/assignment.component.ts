@@ -24,7 +24,7 @@ export class ActivityAssignmentComponent implements OnInit {
   private users: User[];
   private settings: Object;
 
-  constructor(private service: UserService, private serviceActivities: ActivityService, private util: UtilService) {
+  constructor(private service: UserService, private util: UtilService) {
     this.source = new LocalDataSource();
   }
 
@@ -46,14 +46,14 @@ export class ActivityAssignmentComponent implements OnInit {
 
   public onRowSelect(event): void {
     this.manager.listActivitiesSelect = [];
-    this.manager.listActivities.forEach(activitie => {
-      this.manager.listActivitiesSelect.push(activitie as Activity);
-    });
-    this.manager.userActivities = [];
+    console.log("got " + JSON.stringify(this.manager.listActivities));
     console.log(event);
 
     const user = event.data as User;
     this.manager.childrenRequested(user);
+
+    this.manager.listActivitiesSelect.push(...this.manager.listActivities);
+    this.manager.userActivities = [];
 
     const list = event.data.activities as Activity[];
     list.forEach(element => {
@@ -80,8 +80,6 @@ export class ActivityAssignmentComponent implements OnInit {
 
   private loadData(): void {
     this.users = [];
-    this.manager.listActivities = [];
-    this.manager.listActivitiesSelect = [];
 
     if (!this.parent)
       this.service.getUser(+localStorage.getItem('userId')).then((user) => {
@@ -93,12 +91,5 @@ export class ActivityAssignmentComponent implements OnInit {
         this.loadDataSub(user);
       });
     else this.loadDataSub(this.parent);
-
-    this.serviceActivities.getActivitiesParent().then((activities) => {
-      activities.forEach(activitie => {
-        this.manager.listActivities.push(activitie);
-        this.manager.listActivitiesSelect.push(activitie);
-      });
-    });
   }
 }
