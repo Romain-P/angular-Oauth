@@ -8,6 +8,7 @@ import { ActivityAssignmentComponent } from './pages/assignment/assignment.compo
 import { UserService } from './services/user/user.service';
 import { ActivityComponent } from './pages/activity/activity.component';
 import { ActivityService } from './services/activity/activity.service';
+import { StatService } from './services/stat/stat.service';
 import { PointageComponent } from './pages/pointage/pointage.component';
 import { PointageService } from './services/pointage/pointage.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -46,6 +47,7 @@ const APP_PROVIDERS = [
   ActivityService,
   UserService,
   PointageService,
+  StatService,
   RoleService,
   RoleGuard,
   UtilService

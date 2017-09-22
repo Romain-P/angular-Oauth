@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 import {PieChartService} from './pieChart.service';
 
 import 'easy-pie-chart/dist/jquery.easypiechart.js';
+import { Stat } from '../../../models/stat';
 
 @Component({
   selector: 'pie-chart',
@@ -11,15 +12,30 @@ import 'easy-pie-chart/dist/jquery.easypiechart.js';
 })
 // TODO: move easypiechart to component
 export class PieChart {
+  @Input()
+  private stat: Stat;
 
   public charts: Array<Object>;
   private _init = false;
 
   constructor(private _pieChartService: PieChartService) {
-    this.charts = this._pieChartService.getData();
+  
   }
 
   ngAfterViewInit() {
+    this.charts = [
+      {
+        description: 'Salariès' ,
+        stats: 1000,
+      }, {
+        description: 'Validation Mois',
+        stats: 1000,
+      }, {
+        description: 'Validation Semaine',
+        stats: 1000,
+      
+      },
+    ];
     if (!this._init) {
       this._loadPieCharts();
       this._updatePieCharts();

@@ -1,6 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 import {FeedService} from './feed.service';
+import { Stat } from '../../../models/stat';
 
 @Component({
   selector: 'feed',
@@ -8,7 +9,8 @@ import {FeedService} from './feed.service';
   styleUrls: ['./feed.scss']
 })
 export class Feed {
-
+@Input()
+private stat: Stat;
   public feed:Array<Object>;
 
   constructor(private _feedService:FeedService) {

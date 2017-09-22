@@ -1,14 +1,21 @@
-import {Injectable} from '@angular/core';
-import {BaThemeConfigProvider, colorHelper} from '../../../theme';
-
+import { Injectable } from '@angular/core';
+import { BaThemeConfigProvider, colorHelper } from '../../../theme';
+import { UserService } from '../../../services/user/user.service';
 @Injectable()
 export class PieChartService {
 
-  constructor(private _baConfig:BaThemeConfigProvider) {
+  constructor(private _baConfig: BaThemeConfigProvider, private serviceUser: UserService) {
   }
 
   getData() {
-    let pieColor = this._baConfig.get().colors.custom.dashboardPieChart;
+    const pieColor = this._baConfig.get().colors.custom.dashboardPieChart;
+    this.serviceUser.getUsers().then( users => {
+    users.forEach(user => {
+
+    },
+
+);
+    });
     return [
       {
         color: pieColor,
@@ -30,7 +37,7 @@ export class PieChartService {
         description: 'dashboard.returned',
         stats: '32,592',
         icon: 'refresh',
-      }
+      },
     ];
   }
 }
