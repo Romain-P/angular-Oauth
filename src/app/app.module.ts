@@ -5,12 +5,12 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ActivityAssignmentComponent } from './pages/assignment/assignment.component';
-import { UserService } from './services/user/user.service';
+import { UserService } from './services/user.service';
 import { ActivityComponent } from './pages/activity/activity.component';
-import { ActivityService } from './services/activity/activity.service';
-import { StatService } from './services/stat/stat.service';
+import { ActivityService } from './services/activity.service';
+import { StatService } from './services/stat.service';
 import { PointageComponent } from './pages/pointage/pointage.component';
-import { PointageService } from './services/pointage/pointage.service';
+import { PointageService } from './services/pointage.service';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 /*
  * Platform and Environment providers/directives/pipes
@@ -23,18 +23,18 @@ import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
-import { AuthenticationService } from './services/authentication/authentication.service';
-import { AuthenticationGuard, LoggedGuard } from './services/authentication/gard.service';
-import { HttpService } from './services/http/http.service';
+import { AuthenticationService } from './services/authentication.service';
+import { AuthenticationGuard, LoggedGuard } from './services/authentication-gard.service';
+import { HttpService } from './services/http.service';
 import { ActivityManagerComponent} from './pages/activity/activityManager.component';
 import { PointageManagerComponent } from './pages/pointage/pointageManager.component';
 import { CustomEditorComponent } from './pages/pointage/custom-editor.component';
 import { CustomWeekEditorComponent } from './pages/pointage/week-editor.component';
 import { ButtonRenderComponent } from './pages/pointage/button-render.component';
-import {RoleService} from "./services/role/role.service";
+import {RoleService} from "./services/role.service";
 import {RoleAssignmentComponent} from "./pages/roles/role.component";
-import {RoleGuard} from "./services/role/rolegard.service";
-import {UtilService} from "app/services/util/util.service";
+import {RoleGuard} from "./services/role-gard.service";
+import {UtilService} from "app/services/util.service";
 import {AssignmentManagerComponent} from "./pages/assignment/assignmentManager.component";
 // Application wide providers
 const APP_PROVIDERS = [

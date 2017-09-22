@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { ActivityService } from '../../services/activity/activity.service';
+import { ActivityService } from '../../services/activity.service';
 import { Activity } from '../../models/activity';
 import {User} from "../../models/user";
-import {UserService} from "../../services/user/user.service";
-import {UtilService} from "../../services/util/util.service";
+import {UserService} from "../../services/user.service";
+import {UtilService} from "../../services/util.service";
 
 @Component({
   selector: 'assignmentManager',
@@ -55,7 +55,7 @@ export class AssignmentManagerComponent implements OnInit {
     if (+localStorage.getItem("userId") == user.id) return;
 
     if (!user.children || user.children.length == 0)
-      this.service.getUser(user.id).then(x => {
+      this.service.getUserSyncWithMeta(user.id).then(x => {
         if (x.children && x.children.length > 0) {
           user.children = x.children;
           this.tables.push(new Table(path, x));

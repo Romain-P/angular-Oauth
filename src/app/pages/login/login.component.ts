@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, ApplicationRef, Injectable, Input, TemplateRef} from '@angular/core';
 import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
-import {AuthenticationService} from "../../services/authentication/authentication.service";
+import {AuthenticationService} from "../../services/authentication.service";
 import { Router } from '@angular/router';
 import 'rxjs/add/observable/throw';
 

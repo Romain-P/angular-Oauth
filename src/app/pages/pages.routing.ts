@@ -4,10 +4,10 @@ import { ModuleWithProviders } from '@angular/core';
 import { ActivityComponent } from './activity/activity.component';
 import { ActivityAssignmentComponent } from './assignment/assignment.component';
 import { PointageManagerComponent } from './pointage/pointageManager.component';
-import { AuthenticationGuard, LoggedGuard } from '../services/authentication/gard.service';
+import { AuthenticationGuard, LoggedGuard } from '../services/authentication-gard.service';
 import { ActivityManagerComponent } from './activity/activityManager.component';
 import {RoleAssignmentComponent} from "./roles/role.component";
-import {RoleGuard} from "../services/role/rolegard.service";
+import {RoleGuard} from "../services/role-gard.service";
 import {AssignmentManagerComponent} from "./assignment/assignmentManager.component";
 
 // noinspection TypeScriptValidateTypes

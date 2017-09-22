@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Activity } from '../../models/activity';
 import * as moment from 'moment';
+import {HttpService} from "../../services/http.service";
 
 @Component({
   selector: 'pointageManager',
@@ -13,7 +14,7 @@ export class PointageManagerComponent implements OnInit {
    selected: string;
    semaineSelectionnee: number ;
    anneSelectionne: number;
-  constructor() {
+  constructor(private http: HttpService) {
     this.tables = [];
     this.manager = this;
     this.selected = '';

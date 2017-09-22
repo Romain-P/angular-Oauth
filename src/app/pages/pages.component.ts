@@ -3,8 +3,8 @@ import { Routes } from '@angular/router';
 
 import { BaMenuService } from '../theme';
 import { PAGES_MENU } from './pages.menu';
-import {RoleService} from "../services/role/role.service";
-import {UtilService} from "app/services/util/util.service";
+import {RoleService} from "../services/role.service";
+import {UtilService} from "app/services/util.service";
 
 @Component({
   selector: 'pages',

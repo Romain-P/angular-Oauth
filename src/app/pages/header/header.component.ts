@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {GlobalState} from "../../global.state";
-import {AuthenticationService} from "../../services/authentication/authentication.service";
+import {AuthenticationService} from "../../services/authentication.service";
 import {Login} from "../login/login.component";
 import {Router} from "@angular/router";
 

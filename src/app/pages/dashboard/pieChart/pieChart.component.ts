@@ -19,7 +19,7 @@ export class PieChart {
   private _init = false;
 
   constructor(private _pieChartService: PieChartService) {
-  
+
   }
 
   ngAfterViewInit() {
@@ -33,7 +33,7 @@ export class PieChart {
       }, {
         description: 'Validation Semaine',
         stats: 1000,
-      
+
       },
     ];
     if (!this._init) {

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {LocalDataSource, ViewCell} from 'ng2-smart-table';
-import {UserService} from '../../services/user/user.service';
+import {UserService} from '../../services/user.service';
 import {User} from '../../models/user';
 import {Role} from "../../models/role";
-import {RoleService} from "../../services/role/role.service";
+import {RoleService} from "../../services/role.service";
 
 @Component({
   selector: 'roleAssignment',

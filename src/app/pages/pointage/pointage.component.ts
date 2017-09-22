@@ -2,9 +2,9 @@ import { Component, Input, OnInit, OnChanges, SimpleChange } from '@angular/core
 import { LocalDataSource } from 'ng2-smart-table';
 
 
-import { ActivityService } from '../../services/activity/activity.service';
-import { UserService } from '../../services/user/user.service';
-import { PointageService } from '../../services/pointage/pointage.service';
+import { ActivityService } from '../../services/activity.service';
+import { UserService } from '../../services/user.service';
+import { PointageService } from '../../services/pointage.service';
 import { PointageManagerComponent } from './pointageManager.component';
 
 import { User } from '../../models/user';
@@ -36,7 +36,7 @@ export class PointageComponent implements OnInit, OnChanges {
 
   @Input()
   private title: string;
-  
+
 
   listAct: Activity[] = [];
   user: User;
@@ -83,7 +83,7 @@ export class PointageComponent implements OnInit, OnChanges {
   private rowSelected(event: any): void {
     const pointage = event.data as Pointage;
     this.manager.childrenRequested(pointage.activity);
-  
+
   }
 
   private loadData(nbr: number, year: number): void {
@@ -109,7 +109,7 @@ export class PointageComponent implements OnInit, OnChanges {
               week.pointage.user = this.user;
               week.pointage.weekNumber = nbr;
               week.pointage.year = year;
-              
+
 
             } else {
               week.pointage = pointage;
@@ -197,7 +197,7 @@ private loadDatatotal(nbr: number, year: number): void {
         saveButtonContent: '<i class="ion-checkmark"></i>',
         cancelButtonContent: '<i class="ion-close"></i>',
         confirmSave: true,
-        
+
       },
 
       columns: {
@@ -215,8 +215,8 @@ private loadDatatotal(nbr: number, year: number): void {
           },
         },
         monday: { filter: false,
-                  title: 'Lundi', 
-                  type: 'number', 
+                  title: 'Lundi',
+                  type: 'number',
                   editor: {
                     type: 'custom',
                     component: CustomWeekEditorComponent,
@@ -230,14 +230,14 @@ private loadDatatotal(nbr: number, year: number): void {
                   },
                  },
         wednesday: { filter: false,
-                 title: 'Mercredi', 
+                 title: 'Mercredi',
                  editor: {
                   type: 'custom',
                   component: CustomWeekEditorComponent,
                 },
                 },
         thursday: { filter: false,
-           title: 'Jeudi', 
+           title: 'Jeudi',
            editor: {
             type: 'custom',
             component: CustomWeekEditorComponent,
@@ -275,7 +275,7 @@ private loadDatatotal(nbr: number, year: number): void {
         delete: false,
         edit: false,
       },
-     
+
       columns: {
         activity: {
           filter: false,
@@ -305,7 +305,7 @@ private loadDatatotal(nbr: number, year: number): void {
 
   public onEditConfirm(event): void {
     const pointage = event.newData as Pointage;
-    const sem = this.listWeeks.find( x => x.pointage.id === pointage.id 
+    const sem = this.listWeeks.find( x => x.pointage.id === pointage.id
       || (x.pointage.activity.id === pointage.activity.id && x.pointage.weekNumber === pointage.weekNumber
       && x.pointage.year === pointage.year ));
     if ( sem.existe ) {
@@ -321,7 +321,7 @@ private loadDatatotal(nbr: number, year: number): void {
         x => {
         event.confirm.resolve(event.newData);
         this.loadData(pointage.weekNumber, pointage.year);
-     } 
+     }
     );
     }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BaThemeConfigProvider, colorHelper } from '../../../theme';
-import { UserService } from '../../../services/user/user.service';
+import { UserService } from '../../../services/user.service';
 @Injectable()
 export class PieChartService {
 

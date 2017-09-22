@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {LocalDataSource, ViewCell} from 'ng2-smart-table';
-import {UserService} from '../../services/user/user.service';
-import {ActivityService} from '../../services/activity/activity.service';
+import {UserService} from '../../services/user.service';
+import {ActivityService} from '../../services/activity.service';
 import {User} from '../../models/user';
 import {Activity} from '../../models/activity';
 import {AssignmentManagerComponent} from "./assignmentManager.component";
-import {UtilService} from "../../services/util/util.service";
+import {UtilService} from "../../services/util.service";
 
 @Component({
   selector: 'activitiesUser',

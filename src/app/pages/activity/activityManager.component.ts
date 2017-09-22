@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { ActivityService } from '../../services/activity/activity.service';
+import { ActivityService } from '../../services/activity.service';
 import { Activity } from '../../models/activity';
 
 @Component({

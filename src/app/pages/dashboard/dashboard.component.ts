@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StatService } from '../../services/stat/stat.service';
+import { StatService } from '../../services/stat.service';
 import { Stat } from '../../models/stat';
 @Component({
   selector: 'dashboard',
@@ -17,10 +17,10 @@ export class Dashboard implements OnInit {
   }
 
   private loadData(): void {
-   
+
     this.service.getStats().then((st) => {
       this.stat = st;
-     
+
     });
   }
 
