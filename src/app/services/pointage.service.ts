@@ -5,10 +5,12 @@ import { Activity } from '../models/activity';
 import { Pointage } from '../models/pointage';
 import { AuthenticationService } from './authentication.service';
 import { HttpService } from './http.service';
+import {config} from "../app.config";
 
 @Injectable()
 export class PointageService {
-  private pointageUrl = `http://10.64.0.41:8080/gta/week`;
+  private pointageUrl = config.models.week.url;
+  private weekFormat = config.models.week.current_parents_by_weeks;
 
   constructor(private http: HttpService, private auth: AuthenticationService) {}
 
@@ -20,7 +22,7 @@ export class PointageService {
       }).catch(this.handleError);
   }
   getWeekNumber(nbr: number, year: number): Promise<Pointage[]> {
-    const url = `${this.pointageUrl}/user/weekNumber/${nbr}/year/${year}`;
+    const url = this.weekFormat.replace("{number}", `${nbr}`).replace("{year}", `${year}`);
     return this.http.get(url)
     .toPromise()
     .then(response => {

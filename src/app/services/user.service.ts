@@ -4,10 +4,13 @@ import { User } from '../models/user';
 import {AuthenticationService} from './authentication.service';
 import {HttpService} from './http.service';
 import {Activity} from "../models/activity";
+import {config} from "../app.config";
 
 @Injectable()
 export class UserService {
-  private usersUrl = `http://10.64.0.41:8080/gta/user`;
+  private usersUrl = config.models.user.url;
+  private currentUser = config.models.user.current;
+  private metaUser = config.models.user.meta_sync;
 
   constructor(private http: HttpService, private auth: AuthenticationService) {}
 
@@ -19,7 +22,7 @@ export class UserService {
       }).catch(this.handleError);
   }
   getUser(id: number): Promise<User> {
-    return this.http.get(`${this.usersUrl}/${id}`)
+    return this.http.get(`${this.usersUrl}${id}`)
       .toPromise()
       .then(response => {
         return response.json() as User;
@@ -27,7 +30,7 @@ export class UserService {
   }
 
   getUserSyncWithMeta(id: number): Promise<User> {
-    return this.http.get(`${this.usersUrl}/meta-sync/${id}`)
+    return this.http.get(`${this.metaUser}${id}`)
       .toPromise()
       .then(response => {
         return response.json() as User;
@@ -35,7 +38,7 @@ export class UserService {
   }
 
   getCurrentUser(): Promise<User> {
-    return this.http.get(`${this.usersUrl}/current`)
+    return this.http.get(this.currentUser)
       .toPromise()
       .then(response => {
         return response.json() as User;
@@ -58,7 +61,7 @@ export class UserService {
   }
 
   deleteUser(id: number): Promise<User> {
-    const url = `${this.usersUrl}/${id}`;
+    const url = `${this.usersUrl}${id}`;
     return this.http.delete(url)
       .toPromise()
       .then(() => null)

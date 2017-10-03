@@ -7,14 +7,15 @@ import "rxjs/add/operator/do";
 import {isNullOrUndefined} from "util";
 import {User} from "../models/user";
 import {Role} from "../models/role";
+import {config} from "../app.config";
 
 @Injectable()
 export class AuthenticationService {
-  private static readonly api = 'http://10.64.0.41:8080/gta';
-  private static readonly tokenUrl = AuthenticationService.api + '/login/token';
-  private static readonly userPath = AuthenticationService.api + '/user/current-meta-sync';
-  private static readonly clientId = 'clktime-app';
-  private static readonly clientSecret = 'ortec-secret';
+  private static readonly api = config.api_url;
+  private static readonly tokenUrl = config.authentication.url;
+  private static readonly userPath = config.models.user.current_meta_sync;
+  private static readonly clientId = config.authentication.clientId;
+  private static readonly clientSecret = config.authentication.clientSecret;
 
   private static readonly authHeaders = new Headers({
     "Content-Type": "application/x-www-form-urlencoded",

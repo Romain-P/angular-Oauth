@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 import {Activity} from '../models/activity';
 import {HttpService} from './http.service';
+import {config} from "../app.config";
 
 @Injectable()
 export class ActivityService {
-  private activitiesUrl = `http://10.64.0.41:8080/gta/activity`;
-  private activitiesParents = 'http://10.64.0.41:8080/gta/activity/parents';
-  private childrenActivities = 'http://10.64.0.41:8080/gta/activity/children';
+  private activitiesUrl = config.models.activity.url;
+  private activitiesParents = config.models.activity.parents;
+  private childrenActivities = config.models.activity.children;
 
   constructor(private http: HttpService) {}
 
@@ -20,7 +21,7 @@ export class ActivityService {
   }
 
   getChildren(id: number): Promise<Activity[]> {
-    return this.http.get(this.childrenActivities + '/' + id)
+    return this.http.get(this.childrenActivities + id)
       .toPromise()
       .then(response => {
         return response.json() as Activity[];
@@ -44,7 +45,7 @@ export class ActivityService {
   }
 
   deleteActivity(id: number): Promise<Activity> {
-    const url = `${this.activitiesUrl}/${id}`;
+    const url = `${this.activitiesUrl}${id}`;
     return this.http.delete(url)
       .toPromise()
       .then(() => null)

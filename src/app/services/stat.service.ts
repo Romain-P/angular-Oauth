@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 import { Stat } from '../models/stat';
 import { HttpService } from './http.service';
+import {config} from "../app.config";
 
 @Injectable()
 export class StatService {
-  private pointageUrl = `http://10.64.0.41:8080/gta/stat`;
+  private pointageUrl = config.models.stat.url;
 
   constructor(private http: HttpService) {}
 

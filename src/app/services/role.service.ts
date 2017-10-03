@@ -3,10 +3,11 @@ import 'rxjs/add/operator/toPromise';
 import {Activity} from '../models/activity';
 import {HttpService} from './http.service';
 import {Role} from "../models/role";
+import {config} from "../app.config";
 
 @Injectable()
 export class RoleService {
-  private roleUrl = `http://10.64.0.41:8080/gta/role`;
+  private roleUrl = config.models.role.url;
   private userRoles: Array<String>;
 
   constructor(private http: HttpService) {
