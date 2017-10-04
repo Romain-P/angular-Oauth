@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { Activity } from '../../models/activity';
 import * as moment from 'moment';
 import {HttpService} from "../../services/http.service";
+import {UserService} from "../../services/user.service";
+import {Absence} from "../../models/absence";
 
 @Component({
   selector: 'pointageManager',
@@ -12,9 +14,11 @@ export class PointageManagerComponent implements OnInit {
   private tables: Table[];
   private manager: PointageManagerComponent;
    selected: string;
-   semaineSelectionnee: number ;
-   anneSelectionne: number;
-  constructor(private http: HttpService) {
+   private semaineSelectionnee: number ;
+   private anneSelectionne: number;
+  static semaineSelectionneeS: number ;
+  static anneSelectionneS: number;
+  constructor(private http: HttpService, private userService: UserService) {
     this.tables = [];
     this.manager = this;
     this.selected = '';
@@ -23,6 +27,7 @@ export class PointageManagerComponent implements OnInit {
   listAnnee: ListElementComponent[] = [];
   listSemaine: ListElementComponent[] = [];
 
+  static absenceDays: Absence[];
 
   public ngOnInit() {
     // setting select data
@@ -33,10 +38,9 @@ export class PointageManagerComponent implements OnInit {
     }
 
     this.listSemaine.push(new ListElementComponent(0, `----Semaine----`));
-    for (let i = 1; i < 53; i++) {
-      //allez kiss ça marche hehehe, bonne soiree
+    for (let i = 1; i < 53; i++)
       this.listSemaine.push(new ListElementComponent(i, `${i}-semaine du  ${moment(`${moment().year()}`).add(i, 'week').startOf('isoWeek').format('DD/MM')}`));
-    }
+
     this.selected = ''; //TODO
 
     let current = moment().startOf('isoWeek');
@@ -44,6 +48,12 @@ export class PointageManagerComponent implements OnInit {
     this.anneSelectionne = current.year();
 
     this.tables.push(new Table('/', null));
+    this.collectAbsenceDays();
+  }
+
+  private collectAbsenceDays() {
+    this.userService.getAbsenceDays(+localStorage.getItem('userId'), this.anneSelectionne)
+      .then(days => PointageManagerComponent.absenceDays = days);
   }
 
   public childrenRequested(activity: Activity): void {

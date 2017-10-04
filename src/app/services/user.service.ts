@@ -5,6 +5,7 @@ import {AuthenticationService} from './authentication.service';
 import {HttpService} from './http.service';
 import {Activity} from "../models/activity";
 import {config} from "../app.config";
+import {Absence} from "../models/absence";
 
 @Injectable()
 export class UserService {
@@ -13,6 +14,13 @@ export class UserService {
   private metaUser = config.models.user.meta_sync;
 
   constructor(private http: HttpService, private auth: AuthenticationService) {}
+
+  getAbsenceDays(userId: number, year: number): Promise<Absence[]> {
+    return this.http.get(config.models.user.absence_days.replace('{userId}', `${userId}`).replace('{year}', `${year}`))
+      .toPromise()
+      .then(response => response.json() as User[])
+      .catch(this.handleError);
+  }
 
   getUsers(): Promise<User[]> {
     return this.http.get(this.usersUrl)

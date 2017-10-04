@@ -156,11 +156,10 @@ export class ActivityComponent implements OnInit {
 
     this.service.postActivity(activity)
       .then(x => {
-        x.subActivities = null;
+        x.subActivities = [];
         if (this.parent)
           this.parent.subActivities.push(x);
-        activity.id = x.id;
-        this.loadData()
+        event.confirm.resolve(x);
       });
   }
 

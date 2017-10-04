@@ -1,4 +1,4 @@
-var api_url = 'http://localhost:8080';
+var api_url = 'http://10.64.0.41:8080/gta';
 
 export var config = {
   api_url: api_url,
@@ -14,7 +14,8 @@ export var config = {
       url: api_url + '/user/',
       current: api_url + '/user/current',
       current_meta_sync: api_url + '/user/current-meta-sync',
-      meta_sync: api_url + '/user/current-meta/'
+      meta_sync: api_url + '/user/meta-sync/',
+      absence_days: api_url + '/user/absenceDays/{userId}/{year}'
     },
 
     activity: {

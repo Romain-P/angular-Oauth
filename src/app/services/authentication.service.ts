@@ -8,6 +8,7 @@ import {isNullOrUndefined} from "util";
 import {User} from "../models/user";
 import {Role} from "../models/role";
 import {config} from "../app.config";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthenticationService {
@@ -23,7 +24,7 @@ export class AuthenticationService {
     "Authorization": "Basic " + btoa(AuthenticationService.clientId + ":" + AuthenticationService.clientSecret)
   });
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private router: Router) {
   }
 
   public authenticate(username: string, password: string): Observable<any> {
@@ -35,6 +36,7 @@ export class AuthenticationService {
       .do(json => {
         localStorage.setItem('token', json.access_token);
         localStorage.setItem('expiration_date', ((Date.now() / 1000) + json.expires_in));
+        this.router.navigateByUrl("/pages/dashboard");
       })
       .mergeMap(json => this.http.get(AuthenticationService.userPath, {headers: this.getRequestHeader()}))
       .map(response => (response.json() as User))
@@ -80,6 +82,6 @@ export class AuthenticationService {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration_date');
     localStorage.removeItem('userId');
-    localStorage.removeItem('roles')
+    localStorage.removeItem('roles');
   }
 }
