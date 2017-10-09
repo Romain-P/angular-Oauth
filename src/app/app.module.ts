@@ -36,6 +36,7 @@ import {RoleAssignmentComponent} from "./pages/roles/role.component";
 import {RoleGuard} from "./services/role-gard.service";
 import {UtilService} from "app/services/util.service";
 import {AssignmentManagerComponent} from "./pages/assignment/assignmentManager.component";
+import {RsaService} from "./services/rsa.service";
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
@@ -50,7 +51,8 @@ const APP_PROVIDERS = [
   StatService,
   RoleService,
   RoleGuard,
-  UtilService
+  UtilService,
+  RsaService,
 ];
 
 export type StoreType = {

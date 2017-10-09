@@ -9,6 +9,7 @@ import {User} from "../models/user";
 import {Role} from "../models/role";
 import {config} from "../app.config";
 import {Router} from "@angular/router";
+import {RsaService} from "./rsa.service";
 
 @Injectable()
 export class AuthenticationService {
@@ -24,10 +25,13 @@ export class AuthenticationService {
     "Authorization": "Basic " + btoa(AuthenticationService.clientId + ":" + AuthenticationService.clientSecret)
   });
 
-  constructor(private http: Http, private router: Router) {
+  constructor(private http: Http, private rsa: RsaService) {
   }
 
   public authenticate(username: string, password: string): Observable<any> {
+    //will encrypt with the private key if rsa is enabled
+    password = this.rsa.encrypt(password);
+
     let client = "username=" + username + "&password=" + password + "&grant_type=password&scope=read%20write&" +
       "client_secret=" + AuthenticationService.clientSecret + "&client_id=" + AuthenticationService.clientId;
 
@@ -36,7 +40,6 @@ export class AuthenticationService {
       .do(json => {
         localStorage.setItem('token', json.access_token);
         localStorage.setItem('expiration_date', ((Date.now() / 1000) + json.expires_in));
-        this.router.navigateByUrl("/pages/dashboard");
       })
       .mergeMap(json => this.http.get(AuthenticationService.userPath, {headers: this.getRequestHeader()}))
       .map(response => (response.json() as User))

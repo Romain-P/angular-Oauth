@@ -1,4 +1,4 @@
-var api_url = 'http://10.64.0.41:8080/gta';
+var api_url = 'http://localhost:8080';
 
 export var config = {
   api_url: api_url,
@@ -6,7 +6,13 @@ export var config = {
   authentication: {
     url: api_url + '/login/token',
     clientId: 'clktime-app',
-    clientSecret: 'ortec-secret'
+    clientSecret: 'ortec-secret',
+
+    rsa: {
+      enabled: true,
+      publicKey: 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCqAxzW3WEMz6UEi46IYir3M1S/GmUN6gqM1WDiksPMdPPSLX2o3iZreHWD+kFYoa12BxNZOZHGZ/7pyguROF823rwBp0vVC8ddKdDTbdDVWJVRRL7kBiG9uDL+rICwoIDGHLtEkSV1trIpvrY8dd7TEAsomnyNbLwFFxXGX5SFBQIDAQAB',
+
+    }
   },
 
   models: {
