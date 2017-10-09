@@ -11,7 +11,6 @@ export var config = {
     rsa: {
       enabled: true,
       publicKey: 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCqAxzW3WEMz6UEi46IYir3M1S/GmUN6gqM1WDiksPMdPPSLX2o3iZreHWD+kFYoa12BxNZOZHGZ/7pyguROF823rwBp0vVC8ddKdDTbdDVWJVRRL7kBiG9uDL+rICwoIDGHLtEkSV1trIpvrY8dd7TEAsomnyNbLwFFxXGX5SFBQIDAQAB',
-
     }
   },
 
