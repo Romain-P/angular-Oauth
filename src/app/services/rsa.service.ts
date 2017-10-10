@@ -7,6 +7,7 @@ export class RsaService {
   private enabled: boolean;
 
   constructor() {
+    //BEP format required by crypto
     this.publicKey = "-----BEGIN PUBLIC KEY-----\n" + config.authentication.rsa.publicKey + "\n-----END PUBLIC KEY-----";
     this.enabled = config.authentication.rsa.enabled;
   }
